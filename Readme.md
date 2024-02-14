@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Артур Аюпов](https://up.htmlacademy.ru/react/15/user/2411369).
-* Наставник: `Неизвестно`.
+* Наставник: [Arthur Litovko](https://htmlacademy.ru/profile/id6927).
 
 ---
 
