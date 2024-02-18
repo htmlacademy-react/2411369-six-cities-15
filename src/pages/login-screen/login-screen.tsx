@@ -1,4 +1,4 @@
-function AuthFormScreen(): JSX.Element {
+function LoginScreen(): JSX.Element {
   return (
     <main className="page__main page__main--login">
       <div className="page__login-container container">
@@ -28,4 +28,4 @@ function AuthFormScreen(): JSX.Element {
   );
 }
 
-export default AuthFormScreen;
+export default LoginScreen;
