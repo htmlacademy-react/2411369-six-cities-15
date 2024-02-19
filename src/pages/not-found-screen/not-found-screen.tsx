@@ -1,8 +1,16 @@
-// import { Link } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 import LogoComponent from '../../components/logo-component/logo-component';
 
+const containerStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '50px'
+};
+
 function NotFoundScreen(): JSX.Element {
+  const homeLink = <Link to='/'>Вернуться на главную страницу</Link>
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -14,16 +22,10 @@ function NotFoundScreen(): JSX.Element {
       </header>
 
       <main className="page__main page__main--index">
-        <h1 style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '200px'
-        }}
-        >
+        <h1 style={containerStyle}>
           Error 404 - page not found.
         </h1>
-        {/* <Link to='/'>Вернуться на главную страницу</Link> */}
+        <div style={containerStyle}>{homeLink}</div>
       </main>
     </div>
   );
