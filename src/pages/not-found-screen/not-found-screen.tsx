@@ -9,7 +9,7 @@ const containerStyle = {
 };
 
 function NotFoundScreen(): JSX.Element {
-  const homeLink = <Link to='/'>Вернуться на главную страницу</Link>
+  const homeLink = <Link to='/'>Вернуться на главную страницу</Link>;
 
   return (
     <div className="page page--gray page--main">

@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom';
 import LogoComponent from '../../components/logo-component/logo-component';
 
 function LoginScreen(): JSX.Element {
   return (
     <div className="page page--gray page--login">
+      {/* TODO: Импортировать HeaderComponent */}
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -31,9 +33,9 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link className="locations__item-link" to="#">
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>
