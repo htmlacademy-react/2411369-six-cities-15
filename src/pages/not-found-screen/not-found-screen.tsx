@@ -1,15 +1,11 @@
 import { Link } from 'react-router-dom';
 import LogoComponent from '../../components/logo-component/logo-component';
+import style from './not-found-screen.module.css';
+import { useDocumentTitle } from '../../hooks/document-title';
 
-const containerStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '50px'
-};
 
 function NotFoundScreen(): JSX.Element {
-  const homeLink = <Link to='/'>Вернуться на главную страницу</Link>;
+  useDocumentTitle('Not found');
 
   return (
     <div className="page page--gray page--main">
@@ -22,10 +18,12 @@ function NotFoundScreen(): JSX.Element {
       </header>
 
       <main className="page__main page__main--index">
-        <h1 style={containerStyle}>
+        <h1 className={style.container}>
           Error 404 - page not found.
         </h1>
-        <div style={containerStyle}>{homeLink}</div>
+        <div className={style.container}>
+          <Link to='/' className={style.link}>Go back to main page</Link>
+        </div>
       </main>
     </div>
   );
