@@ -1,19 +1,28 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
-type PrivateRouteProps = {
+type AccessRouteProps = {
   authorizationStatus: AuthorizationStatus;
   children: JSX.Element;
 }
 
-function PrivateRoute(props: PrivateRouteProps): JSX.Element {
-  const { authorizationStatus, children } = props;
 
-  return (
-    authorizationStatus === AuthorizationStatus.Auth
-      ? children
-      : <Navigate to={AppRoute.Login} />
-  );
-}
+const createAccessRoute = (status: AuthorizationStatus, fallback: AppRoute) =>
+  function AccesRoute({ authorizationStatus, children }: AccessRouteProps) {
+    return (
+      authorizationStatus === status
+        ? children
+        : <Navigate to={fallback} />
+    );
+  };
 
-export default PrivateRoute;
+const PrivateRoute = createAccessRoute(
+  AuthorizationStatus.Auth,
+  AppRoute.Login
+);
+const PublicRoute = createAccessRoute(
+  AuthorizationStatus.NoAuth,
+  AppRoute.Main
+);
+
+export { PrivateRoute, PublicRoute };
