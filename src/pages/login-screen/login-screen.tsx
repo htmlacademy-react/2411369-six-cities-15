@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import LogoComponent from '../../components/logo-component/logo-component';
+import { useDocumentTitle } from '../../hooks/document-title';
 
 function LoginScreen(): JSX.Element {
+  useDocumentTitle('Login');
+
   return (
     <div className="page page--gray page--login">
       {/* TODO: Импортировать HeaderComponent */}

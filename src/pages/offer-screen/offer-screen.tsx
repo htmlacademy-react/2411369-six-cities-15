@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import HeaderComponent from '../../components/header-component/header-component';
+import { useDocumentTitle } from '../../hooks/document-title';
 
 function OfferScreen(): JSX.Element {
+  useDocumentTitle('Offer');
+
   return (
     <div className="page">
       <HeaderComponent />
