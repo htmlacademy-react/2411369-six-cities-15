@@ -1,17 +1,17 @@
-import CardComponent from '../../components/card-component/card-component';
+import CardContainerComponent from '../../components/card-container-component/card-container-component';
 import HeaderComponent from '../../components/header-component/header-component';
 import LocationsComponent from '../../components/locations-component/locations-component';
 import SortComponent from '../../components/sort-component/sort-component';
 import { useDocumentTitle } from '../../hooks/document-title';
-import { OFFERS } from '../../mocks/offers';
+import { ListOffers } from '../../types/offer';
 
 type MainScreenProps = {
   offersCount: number;
+  offers: ListOffers[];
 }
 
-function MainScreen({offersCount}: MainScreenProps): JSX.Element {
+function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
   useDocumentTitle('Main page');
-
   return (
     <div className="page page--gray page--main">
       <HeaderComponent />
@@ -27,11 +27,7 @@ function MainScreen({offersCount}: MainScreenProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersCount} places to stay in Amsterdam</b>
               <SortComponent />
-              <div className="cities__places-list places__list tabs__content">
-                {OFFERS.map((item) => (
-                  <CardComponent key={item.id} environment="cities" {...item} />
-                ))}
-              </div>
+              <CardContainerComponent offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

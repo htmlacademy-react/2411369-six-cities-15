@@ -4,19 +4,29 @@ import classNames from 'classnames';
 import { useState } from 'react';
 
 type CardComponentProps = ListOffers & {
-  environment: 'cities' | 'favorites';
+  environment: 'cities' | 'favorites' | 'near-places';
 };
 
 const MAX_RATING = 5;
 
+const cardClass = {
+  cities: 'cities',
+  favorites: 'favorites',
+  near: 'near-places'
+};
+
 const sizeImg = {
-  cities: {
+  [cardClass.cities]: {
     width: 260,
     height: 200
   },
-  favorites: {
+  [cardClass.favorites]: {
     width: 150,
     height: 110
+  },
+  [cardClass.near]: {
+    width: 260,
+    height: 200
   }
 };
 

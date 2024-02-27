@@ -6,12 +6,16 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute, PublicRoute } from '../private-route/private-route';
+import { Review } from '../../types/review';
+import { ListOffers } from '../../types/offer';
 
 type AppScreenProps = {
   offersCount: number;
+  offers: ListOffers[];
+  reviews: Review[];
 }
 
-function App({offersCount}: AppScreenProps): JSX.Element {
+function App({offersCount, offers, reviews}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -23,7 +27,7 @@ function App({offersCount}: AppScreenProps): JSX.Element {
           <Route
             key={city.name}
             path={`/${city.slug}`}
-            element={<MainScreen offersCount={offersCount} />}
+            element={<MainScreen offersCount={offersCount} offers={offers} />}
           />
         ))};
         <Route
@@ -49,14 +53,14 @@ function App({offersCount}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferScreen />}
+          element={<OfferScreen offers={offers} reviews={reviews} />}
         />
         <Route
           path="*"
-          element={<Navigate to='/404' />}
+          element={<Navigate to={AppRoute.NotFound} />}
         />
         <Route
-          path='/404'
+          path={AppRoute.NotFound}
           element={<NotFoundScreen />}
         />
       </Routes>

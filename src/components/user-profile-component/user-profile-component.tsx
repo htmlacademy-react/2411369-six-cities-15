@@ -1,6 +1,19 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useLocation } from 'react-router-dom';
 
 function UserProfileComponent(): JSX.Element {
+  const location = useLocation();
+  const loginLink: string = AppRoute.Login;
+  const isLoginPage = loginLink === location.pathname;
+
+  if (isLoginPage) {
+    // Как вывести null?
+    return (
+      <ul className="header__nav-list"></ul>
+    );
+  }
+
   return (
     <ul className="header__nav-list">
       <li className="header__nav-item user">

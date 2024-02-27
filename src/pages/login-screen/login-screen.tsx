@@ -1,22 +1,13 @@
 import { Link } from 'react-router-dom';
-import LogoComponent from '../../components/logo-component/logo-component';
 import { useDocumentTitle } from '../../hooks/document-title';
+import HeaderComponent from '../../components/header-component/header-component';
 
 function LoginScreen(): JSX.Element {
   useDocumentTitle('Login');
 
   return (
     <div className="page page--gray page--login">
-      {/* TODO: Импортировать HeaderComponent */}
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <LogoComponent />
-            </div>
-          </div>
-        </div>
-      </header>
+      <HeaderComponent />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
