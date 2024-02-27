@@ -3,6 +3,7 @@ export const Setting = {
 };
 
 export const APP_NAME = '6 cities';
+export const RATING_STARS_WIDTH_FACTOR = 20;
 
 export const CITIES = [
   {name: 'Paris', slug: 'paris'},
@@ -22,13 +23,15 @@ export const OFFER_TYPE = [
   'Hotel'
 ] as const;
 
+// Как использовать?
 export type OfferType = typeof OFFER_TYPE[number];
 
 export enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/:id'
+  Offer = '/offer/:id',
+  NotFound = '/404'
 }
 
 export enum AuthorizationStatus {

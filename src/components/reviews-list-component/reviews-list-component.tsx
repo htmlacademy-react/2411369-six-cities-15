@@ -1,13 +1,8 @@
 import { Review } from '../../types/review';
+import { getRating } from '../../utils';
 
 type ReviewFormComponentProps = {
   reviews: Review[];
-}
-
-const RATING_STARS_WIDTH_FACTOR = 20;
-
-function getRating(rating: number): string {
-  return `${RATING_STARS_WIDTH_FACTOR * rating}%`;
 }
 
 function ReviewsListComponent({ reviews}: ReviewFormComponentProps): JSX.Element {
