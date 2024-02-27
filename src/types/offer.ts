@@ -10,7 +10,7 @@ export type City = {
 };
 
 export type ListOffers = {
-  id?: string;
+  id: string;
   title: string;
   type: string;
   price: number;
@@ -20,4 +20,14 @@ export type ListOffers = {
   isPremium: boolean;
   rating: number;
   previewImage: string;
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  images: string[];
+  maxAdults: number;
 };
