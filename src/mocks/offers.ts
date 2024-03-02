@@ -15,6 +15,8 @@ const GOODS = [
   'Fridge'
 ];
 
+const OFFER_COUNT = faker.number.int({ min: 2, max: 6 });
+
 const getMockLocation = (): Location => ({
   latitude: faker.location.latitude(),
   longitude: faker.location.longitude(),
@@ -22,7 +24,7 @@ const getMockLocation = (): Location => ({
 });
 
 const getMockCity = (): City => ({
-  name: faker.helpers.arrayElement(CITIES).name,
+  name: faker.helpers.arrayElement(CITIES),
   location: getMockLocation()
 });
 
@@ -55,3 +57,6 @@ export const getMockOffer = (): ListOffers => {
     maxAdults: faker.number.int({ min: 1, max: 4 })
   });
 };
+
+export const offers: ListOffers[] = Array.from({ length: OFFER_COUNT }, () => getMockOffer());
+

@@ -1,6 +1,7 @@
-import { RATING_STARS_WIDTH_FACTOR } from './const';
+const enum Default {
+  ScalingFactor = 100 / 5
+}
 
-
-export function getRating(rating: number): string {
-  return `${RATING_STARS_WIDTH_FACTOR * rating}%`;
+export function formatRating(rating: number) {
+  return `${Math.round(Default.ScalingFactor * rating)}%`;
 }
