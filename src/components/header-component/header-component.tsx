@@ -1,20 +1,33 @@
+import { Outlet, useLocation } from 'react-router-dom';
+import NavigationComponent from '../navigation-component/navigation-component';
+import { AppRoute } from '../../const';
 import LogoComponent from '../logo-component/logo-component';
-import UserProfileComponent from '../user-profile-component/user-profile-component';
 
 function HeaderComponent(): JSX.Element {
+  const { pathname } = useLocation() as { pathname: AppRoute };
+
+  const classPage = {
+    [AppRoute.Main]: 'page--gray page--main',
+    [AppRoute.Login]: 'page--gray page--login',
+    [AppRoute.Favorites]: '',
+    [AppRoute.Offer]: '',
+    [AppRoute.NotFound]: ''
+  };
+
   return (
-    <header className="header">
-      <div className="container">
-        <div className="header__wrapper">
-          <div className="header__left">
-            <LogoComponent />
+    <div className={`page ${classPage[pathname]}`}>
+      <header className="header">
+        <div className="container">
+          <div className="header__wrapper">
+            <div className="header__left">
+              <LogoComponent pathname={pathname} />
+            </div>
+            <NavigationComponent pathname={pathname} />
           </div>
-          <nav className="header__nav">
-            <UserProfileComponent />
-          </nav>
         </div>
-      </div>
-    </header>
+      </header>
+      <Outlet />
+    </div>
   );
 }
 
