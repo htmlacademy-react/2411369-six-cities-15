@@ -14,7 +14,7 @@ function CardList({offers, offersCount}: CardListProps) {
   const isEmpty = offers.length === 0;
   const [activeOffer, setActiveOffer] = useState<string | null>(null);
   const handleMouseEnter = (id: string | null) => setActiveOffer(id);
-  const handleMouseLeave = (null);
+  const handleMouseLeave = () => (null);
 
   return (
     <div className= {classNames('container', 'cities__places-container', {'cities__places-container--empty': isEmpty})}>
