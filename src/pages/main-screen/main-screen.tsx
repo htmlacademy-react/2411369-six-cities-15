@@ -1,11 +1,11 @@
-import CardContainerComponent from '../../components/card-container-component/card-container-component';
-import LocationsComponent from '../../components/locations-component/locations-component';
+import CardList from '../../components/card-list/card-list';
+import Locations from '../../components/locations/locations';
 import { useDocumentTitle } from '../../hooks/document-title';
-import { ListOffers } from '../../types/offer';
+import { Offers } from '../../types/offer';
 
 type MainScreenProps = {
   offersCount: number;
-  offers: ListOffers[];
+  offers: Offers[];
 }
 
 function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
@@ -16,11 +16,11 @@ function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <LocationsComponent />
+          <Locations />
         </section>
       </div>
       <div className="cities">
-        <CardContainerComponent offersCount={offersCount} offers={offers} />
+        <CardList offersCount={offersCount} offers={offers} />
       </div>
     </main>
   );

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function FooterComponent(): JSX.Element {
+function Footer(): JSX.Element {
   return (
     <footer className="footer container">
       <Link className="footer__logo-link" to="/">
@@ -10,4 +10,4 @@ function FooterComponent(): JSX.Element {
   );
 }
 
-export default FooterComponent;
+export default Footer;

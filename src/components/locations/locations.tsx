@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CITIES } from '../../const';
 
-function LocationsComponent(): JSX.Element {
+function Locations(): JSX.Element {
   return (
     <ul className="locations__list tabs__list">
       {CITIES.map((city) => (
@@ -28,4 +28,4 @@ function LocationsComponent(): JSX.Element {
   );
 }
 
-export default LocationsComponent;
+export default Locations;

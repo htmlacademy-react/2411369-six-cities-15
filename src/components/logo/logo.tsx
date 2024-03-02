@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-type LogoComponentProps = {
+type LogoProps = {
   pathname: AppRoute;
 }
 
-function LogoComponent({pathname}: LogoComponentProps): JSX.Element {
+function Logo({pathname}: LogoProps): JSX.Element {
   const imgLogo = <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />;
   const linkLogo = (
     <Link to='/' className="header__logo-link header__logo-link--active">
@@ -18,4 +18,4 @@ function LogoComponent({pathname}: LogoComponentProps): JSX.Element {
   );
 }
 
-export default LogoComponent;
+export default Logo;

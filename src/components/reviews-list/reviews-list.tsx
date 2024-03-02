@@ -1,12 +1,12 @@
 import { Review } from '../../types/review';
 import { formatRating } from '../../utils';
-import ReviewsFormComponent from '../reviews-form-component/reviews-form-component';
+import ReviewsForm from '../reviews-form/reviews-form';
 
-type ReviewFormComponentProps = {
+type ReviewListProps = {
   reviews: Review[];
 }
 
-function ReviewsListComponent({ reviews }: ReviewFormComponentProps): JSX.Element {
+function ReviewsList({ reviews }: ReviewListProps): JSX.Element {
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
@@ -40,9 +40,9 @@ function ReviewsListComponent({ reviews }: ReviewFormComponentProps): JSX.Elemen
           </li>
         ))}
       </ul>
-      <ReviewsFormComponent />
+      <ReviewsForm />
     </section>
   );
 }
 
-export default ReviewsListComponent;
+export default ReviewsList;

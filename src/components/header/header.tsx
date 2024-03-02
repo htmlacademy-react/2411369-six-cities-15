@@ -1,9 +1,9 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import NavigationComponent from '../navigation-component/navigation-component';
+import Navigation from '../navigation/navigation';
 import { AppRoute } from '../../const';
-import LogoComponent from '../logo-component/logo-component';
+import Logo from '../logo/logo';
 
-function HeaderComponent(): JSX.Element {
+function Header(): JSX.Element {
   const { pathname } = useLocation() as { pathname: AppRoute };
 
   const classPage = {
@@ -20,9 +20,9 @@ function HeaderComponent(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <LogoComponent pathname={pathname} />
+              <Logo pathname={pathname} />
             </div>
-            <NavigationComponent pathname={pathname} />
+            <Navigation pathname={pathname} />
           </div>
         </div>
       </header>
@@ -31,4 +31,4 @@ function HeaderComponent(): JSX.Element {
   );
 }
 
-export default HeaderComponent;
+export default Header;

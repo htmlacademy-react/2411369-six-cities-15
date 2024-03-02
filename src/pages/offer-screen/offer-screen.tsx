@@ -1,15 +1,15 @@
 import { useDocumentTitle } from '../../hooks/document-title';
-import CardComponent from '../../components/card-component/card-component';
+import Card from '../../components/card/card';
 import { getMockOffer } from '../../mocks/offers';
-import { ListOffers } from '../../types/offer';
+import { Offers } from '../../types/offer';
 import { useParams } from 'react-router-dom';
-import ReviewsListComponent from '../../components/reviews-list-component/reviews-list-component';
+import ReviewsList from '../../components/reviews-list/reviews-list';
 import { reviews } from '../../mocks/reviews';
 import Bookmark from '../../components/bookmark/bookmark';
 import { formatRating } from '../../utils';
 
 type OfferScreenProps = {
-  offers: ListOffers[];
+  offers: Offers[];
 }
 
 function OfferScreen({offers}: OfferScreenProps): JSX.Element {
@@ -104,7 +104,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
                 </p>
               </div>
             </div>
-            <ReviewsListComponent reviews={reviews} />
+            <ReviewsList reviews={reviews} />
           </div>
         </div>
         <section className="offer__map map"></section>
@@ -115,7 +115,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
           <div className="near-places__list places__list">
             {/* Временное решение */}
             {Array.from({ length: 3 }, getMockOffer).map((item) => (
-              <CardComponent key={item.id} environment="near-places" {...item} />
+              <Card key={item.id} environment="near-places" {...item} />
             ))}
           </div>
         </section>

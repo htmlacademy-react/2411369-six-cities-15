@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function SortComponent(): JSX.Element {
+function Sort(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOptions = () => {
@@ -26,4 +26,4 @@ function SortComponent(): JSX.Element {
   );
 }
 
-export default SortComponent;
+export default Sort;

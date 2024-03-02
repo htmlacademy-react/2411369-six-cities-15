@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import LoggedNavigationComponent from '../../logged-navigation-component/logged-navigation-component';
+import LoggedNavigation from '../logged-navigation/logged-navigation';
 import useAuth from '../../hooks/user-authorization';
 import { AppRoute } from '../../const';
 
-type NavigationComponentProps = {
+type NavigationProps = {
   pathname: string;
 }
 
-function NavigationComponent({pathname}: NavigationComponentProps): JSX.Element {
+function Navigation({pathname}: NavigationProps): JSX.Element {
   const location = pathname;
   const loginLink: string = AppRoute.Login;
   const isLoginPage = loginLink === location;
@@ -22,7 +22,7 @@ function NavigationComponent({pathname}: NavigationComponentProps): JSX.Element 
   return (
     <nav className="header__nav">
       {authState.isAuthenticated ? (
-        <LoggedNavigationComponent logout={logout} />
+        <LoggedNavigation logout={logout} />
       ) : (
         <ul className="header__nav-list">
           <li className="header__nav-item user">
@@ -37,4 +37,4 @@ function NavigationComponent({pathname}: NavigationComponentProps): JSX.Element 
   );
 }
 
-export default NavigationComponent;
+export default Navigation;

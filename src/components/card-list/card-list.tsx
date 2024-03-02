@@ -1,16 +1,16 @@
 import classNames from 'classnames';
-import { ListOffers } from '../../types/offer';
-import CardComponent from '../card-component/card-component';
-import SortComponent from '../sort-component/sort-component';
-import EmptyCityComponent from '../empty-city-component/empty-city-component';
+import { Offers } from '../../types/offer';
+import Card from '../card/card';
+import Sort from '../sort/sort';
+import CardListEmpty from '../card-list-empty/card-list-empty';
 import { useState } from 'react';
 
-type CardComponentProps = {
+type CardListProps = {
   offersCount: number;
-  offers: ListOffers[];
+  offers: Offers[];
 }
 
-function CardContainerComponent({offers, offersCount}: CardComponentProps) {
+function CardList({offers, offersCount}: CardListProps) {
   const isEmpty = offers.length === 0;
   const [activeOffer, setActiveOffer] = useState<string | null>(null);
   const handleMouseEnter = (id: string | null) => setActiveOffer(id);
@@ -18,15 +18,15 @@ function CardContainerComponent({offers, offersCount}: CardComponentProps) {
 
   return (
     <div className= {classNames('container', 'cities__places-container', {'cities__places-container--empty': isEmpty})}>
-      {isEmpty ? <EmptyCityComponent /> : (
+      {isEmpty ? <CardListEmpty /> : (
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{offersCount} places to stay in Amsterdam </b>
           <p>Current ID: {activeOffer}</p>
-          <SortComponent />
+          <Sort />
           <div className="cities__places-list places__list tabs__content">
             {offers.map((offer) => (
-              <CardComponent key={offer.id} {...offer} environment="cities" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
+              <Card key={offer.id} {...offer} environment="cities" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
             ))}
           </div>
         </section>
@@ -39,4 +39,4 @@ function CardContainerComponent({offers, offersCount}: CardComponentProps) {
   );
 }
 
-export default CardContainerComponent;
+export default CardList;

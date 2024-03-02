@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { AppRoute } from '../../const';
 
-type LoggedNavigationComponentProps = {
+type LoggedNavigationProps = {
   logout: () => void;
 }
 
-function LoggedNavigationComponent({logout}: LoggedNavigationComponentProps): JSX.Element {
+function LoggedNavigation({logout}: LoggedNavigationProps): JSX.Element {
   return (
     <ul className="header__nav-list">
       <li className="header__nav-item user">
@@ -24,4 +24,4 @@ function LoggedNavigationComponent({logout}: LoggedNavigationComponentProps): JS
   );
 }
 
-export default LoggedNavigationComponent;
+export default LoggedNavigation;

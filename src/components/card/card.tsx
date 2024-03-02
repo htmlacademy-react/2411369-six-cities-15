@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
-import { ListOffers } from '../../types/offer';
+import { Offers } from '../../types/offer';
 import classNames from 'classnames';
 import Bookmark from '../bookmark/bookmark';
 import { formatRating } from '../../utils';
 
-type CardComponentProps = ListOffers & {
+type CardProps = Offers & {
   environment: 'cities' | 'favorites' | 'near-places';
   onMouseEnter?: (id: string) => void;
   onMouseLeave?: () => void;
 };
 
-function CardComponent({
+function Card({
   id,
   title,
   type,
@@ -22,7 +22,7 @@ function CardComponent({
   environment,
   onMouseEnter = () => void 0,
   onMouseLeave = () => void 0
-}: CardComponentProps): JSX.Element {
+}: CardProps): JSX.Element {
 
   const handleMouseEnter = () => {
     onMouseEnter(id);
@@ -70,4 +70,4 @@ function CardComponent({
   );
 }
 
-export default CardComponent;
+export default Card;
