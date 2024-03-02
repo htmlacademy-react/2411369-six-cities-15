@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 function ReviewsForm(): JSX.Element {
   const [formData, setFormData] = useState({
-    rating: '',
+    rating: 0,
     review: ''
   });
 

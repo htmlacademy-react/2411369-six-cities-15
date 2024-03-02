@@ -5,7 +5,7 @@ type AuthState = {
   userId: string | null;
 }
 
-const useAuth = (): [AuthState, (usedId: string | null) => void, () => void] => {
+export const useAuth = (): [AuthState, (usedId: string | null) => void, () => void] => {
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     userId: null
@@ -28,5 +28,3 @@ const useAuth = (): [AuthState, (usedId: string | null) => void, () => void] => 
 
   return [authState, login, logout];
 };
-
-export default useAuth;

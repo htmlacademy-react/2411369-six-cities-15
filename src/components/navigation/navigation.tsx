@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import LoggedNavigation from '../logged-navigation/logged-navigation';
-import useAuth from '../../hooks/user-authorization';
 import { AppRoute } from '../../const';
+import { useAuth } from '../../hooks';
 
 type NavigationProps = {
   pathname: string;

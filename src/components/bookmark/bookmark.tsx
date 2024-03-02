@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useBoolean } from '../../hooks';
 
 type BookmarkProps = {
   isActive: boolean;
@@ -7,16 +7,12 @@ type BookmarkProps = {
 }
 
 function Bookmark({ isActive, place = 'place-card' }: BookmarkProps): JSX.Element {
-  const [isBookmarked, setIsBookmarked] = useState(isActive);
+  const {isOn: isBookmarked, toggle: toggleBookmark} = useBoolean(isActive);
   const classNameObject = {
     [`${place}__bookmark-button`]: true,
     [`${place}__bookmark-button--active`]: isBookmarked
   };
   const bookmarkClass = classNames('button', classNameObject);
-  const toggleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-  };
-
   const iconWidth = place === 'offer' ? '31' : '18';
   const iconHeight = place === 'offer' ? '33' : '19';
 
