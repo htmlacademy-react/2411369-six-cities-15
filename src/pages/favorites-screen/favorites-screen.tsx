@@ -1,17 +1,15 @@
 import { Link } from 'react-router-dom';
 import FooterComponent from '../../components/footer-component/footer-component';
-import HeaderComponent from '../../components/header-component/header-component';
 import CardComponent from '../../components/card-component/card-component';
 import { useDocumentTitle } from '../../hooks/document-title';
 import { getMockOffer } from '../../mocks/offers';
+import { Fragment } from 'react';
 
 function FavoritesScreen(): JSX.Element {
   useDocumentTitle('Favorites');
 
   return (
-    <div className="page">
-      <HeaderComponent />
-
+    <Fragment>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -52,10 +50,8 @@ function FavoritesScreen(): JSX.Element {
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <FooterComponent />
-      </footer>
-    </div>
+      <FooterComponent />
+    </Fragment>
   );
 }
 
