@@ -4,6 +4,7 @@ import Card from '../card/card';
 import Sort from '../sort/sort';
 import CardListEmpty from '../card-list-empty/card-list-empty';
 import { useState } from 'react';
+import { Nullable } from 'vitest';
 
 type CardListProps = {
   offersCount: number;
@@ -13,8 +14,9 @@ type CardListProps = {
 function CardList({offers, offersCount}: CardListProps) {
   const isEmpty = offers.length === 0;
   const [activeOffer, setActiveOffer] = useState<string | null>(null);
-  const handleMouseEnter = (id: string | null) => setActiveOffer(id);
-  const handleMouseLeave = () => (null);
+  const handleMouseHover = (id?: string) => {
+    setActiveOffer(id || null);
+  };
 
   return (
     <div className= {classNames('container', 'cities__places-container', {'cities__places-container--empty': isEmpty})}>
@@ -26,7 +28,7 @@ function CardList({offers, offersCount}: CardListProps) {
           <Sort />
           <div className="cities__places-list places__list tabs__content">
             {offers.map((offer) => (
-              <Card key={offer.id} {...offer} environment="cities" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
+              <Card key={offer.id} {...offer} environment="cities" handleMouseHover={handleMouseHover} />
             ))}
           </div>
         </section>

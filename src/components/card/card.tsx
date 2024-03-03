@@ -6,8 +6,7 @@ import { formatRating } from '../../utils';
 
 type CardProps = Offers & {
   environment: 'cities' | 'favorites' | 'near-places';
-  onMouseEnter?: (id: string) => void;
-  onMouseLeave?: () => void;
+  handleMouseHover: (id?: string) => void;
 };
 
 function Card({
@@ -20,19 +19,21 @@ function Card({
   rating,
   previewImage,
   environment,
-  onMouseEnter = () => void 0,
-  onMouseLeave = () => void 0
+  handleMouseHover
 }: CardProps): JSX.Element {
 
-  const handleMouseEnter = () => {
-    onMouseEnter(id);
+  const handleMouseOn = () => {
+    handleMouseHover(id);
+  };
+  const handleMouseOff = () => {
+    handleMouseHover();
   };
 
   const imgWidth = environment === 'favorites' ? '150' : '260';
   const imgHeight = environment === 'favorites' ? '110' : '200';
 
   return (
-    <article className={`${environment}__card place-card`} onMouseEnter={handleMouseEnter} onMouseLeave={onMouseLeave} >
+    <article className={`${environment}__card place-card`} onMouseEnter={handleMouseOn} onMouseLeave={handleMouseOff} >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
