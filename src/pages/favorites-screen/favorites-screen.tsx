@@ -49,7 +49,7 @@ function FavoritesScreen(): JSX.Element {
                 <div className="favorites__places">
                   {/* Временное решение */}
                   {Array.from({ length: 2 }, getMockOffer).map((item) => (
-                    <Card key={item.id} environment="favorites" {...item} />
+                    <Card key={item.id} environment="favorites" {...item} handleMouseHover={handleMouseHover} />
                   ))}
                 </div>
               </li>
