@@ -7,6 +7,8 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 import { reviews } from '../../mocks/reviews';
 import Bookmark from '../../components/bookmark/bookmark';
 import { formatRating } from '../../utils';
+import { useState } from 'react';
+import classNames from 'classnames';
 
 type OfferScreenProps = {
   offers: Offers[];
@@ -19,6 +21,11 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
   const offer = offers.filter((item) => item.id.toString() === id);
   const [{ isFavorite, isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms }] = offer;
   const { name, avatarUrl, isPro } = host;
+
+  const [activeOffer, setActiveOffer] = useState<string | null>(null);
+  const handleMouseHover = (index?: string) => {
+    setActiveOffer(index || null);
+  };
 
   return (
     <main className="page__main page__main--offer">
@@ -85,7 +92,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
-                <div className={`offer__avatar-wrapper ${isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                <div className={classNames('offer__avatar-wrapper', 'user__avatar-wrapper', {'offer__avatar-wrapper--pro': isPro})}>
                   <img className="offer__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
                 </div>
                 <span className="offer__user-name">
@@ -112,10 +119,12 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
+          {/* Удалить */}
+          <p>Current ID: {activeOffer}</p>
           <div className="near-places__list places__list">
             {/* Временное решение */}
             {Array.from({ length: 3 }, getMockOffer).map((item) => (
-              <Card key={item.id} environment="near-places" {...item} />
+              <Card key={item.id} environment="near-places" {...item} handleMouseHover={handleMouseHover} />
             ))}
           </div>
         </section>
