@@ -4,7 +4,6 @@ import Card from '../card/card';
 import Sort from '../sort/sort';
 import CardListEmpty from '../card-list-empty/card-list-empty';
 import { useState } from 'react';
-import { Nullable } from 'vitest';
 
 type CardListProps = {
   offersCount: number;
