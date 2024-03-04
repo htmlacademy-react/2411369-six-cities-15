@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: oblique;
+  height: 100px;
+}
+
+.link {
+  padding: 16px 20px 13px;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #4481c3;
+}
+
+.link:focus,
+.link:hover {
+  background-color: #3069a6;
+}
