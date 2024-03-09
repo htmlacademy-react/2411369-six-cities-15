@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { Offers, City, Location } from '../types/offer';
-import { CITIES, CityLocation, OFFER_TYPE, OfferType } from '../const';
+import { Offers } from '../types/offer';
+import { CityLocation, OFFER_TYPE, OfferType } from '../const';
 
 const GOODS = [
   'Wi-Fi',

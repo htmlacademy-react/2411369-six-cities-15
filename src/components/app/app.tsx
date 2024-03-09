@@ -10,11 +10,10 @@ import { Offers } from '../../types/offer';
 import Header from '../header/header';
 
 type AppScreenProps = {
-  offersCount: number;
   offers: Offers[];
 }
 
-function App({offersCount, offers}: AppScreenProps): JSX.Element {
+function App({offers}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -25,16 +24,8 @@ function App({offersCount, offers}: AppScreenProps): JSX.Element {
           <Route
             index
             path={AppRoute.Main}
-            element={<MainScreen offersCount={offersCount} offers={offers} />}
-            // element={<Navigate to={CITIES[0].slug} />}
+            element={<MainScreen offers={offers} />}
           />
-          {/* {CITIES.map((city) => (
-            <Route
-              key={city.name}
-              path={`/${city.slug}`}
-              element={<MainScreen offersCount={offersCount} offers={offers} />}
-            />
-          ))}; */}
           <Route
             path={AppRoute.Login}
             element={
@@ -49,8 +40,7 @@ function App({offersCount, offers}: AppScreenProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                // Верни NoAuth
-                authorizationStatus={AuthorizationStatus.Auth}
+                authorizationStatus={AuthorizationStatus.NoAuth}
               >
                 <FavoritesScreen />
               </PrivateRoute>
