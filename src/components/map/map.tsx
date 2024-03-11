@@ -14,30 +14,28 @@ type MapProps = {
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [27, 39],
-  iconAnchor: [13.5, 39]
+  iconAnchor: [13.5, 39],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
   iconSize: [27, 39],
-  iconAnchor: [13.5, 39]
+  iconAnchor: [13.5, 39],
 });
 
 function Map({
   city,
   offers,
   activeOfferId,
-  place = 'cities'
+  place = 'cities',
 }: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap({mapRef, city});
-  // console.log(mapRef);
-  // console.log(city);
+  const location = city.location;
+  const map = useMap({ mapRef, location });
+  const layer = useRef(layerGroup());
 
   useEffect(() => {
     if (map) {
-      const markerLayer = layerGroup().addTo(map);
-
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -46,18 +44,26 @@ function Map({
 
         marker
           .setIcon(
-            activeOfferId !== undefined && offer.id === activeOfferId
+            offer.id === activeOfferId
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(markerLayer);
+          .addTo(layer.current);
       });
 
+      const currentLayer = layer.current;
       return () => {
-        map.removeLayer(markerLayer);
+        currentLayer.clearLayers();
       };
     }
   }, [map, offers, activeOfferId]);
+
+  useEffect(() => {
+    if (map) {
+      layer.current.addTo(map);
+      map.setView([location.latitude, location.longitude], location.zoom);
+    }
+  }, [location, map]);
 
   return <section className={`${place}__map map`} ref={mapRef}></section>;
 }

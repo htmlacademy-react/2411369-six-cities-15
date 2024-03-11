@@ -1,18 +1,19 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { City } from '../types/offer';
+import { Location } from '../types/offer';
+import 'leaflet/dist/leaflet.css';
 
-const MapSettings = {
-  TILE_LAYER: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-  ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+const Setting = {
+  Layer: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  Attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
 };
 
 type UseMapProps = {
   mapRef: MutableRefObject<HTMLElement | null>;
-  city: City;
+  location: Location;
 }
 
-function useMap({mapRef, city}: UseMapProps): Map | null {
+function useMap({mapRef, location}: UseMapProps): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
@@ -20,16 +21,16 @@ function useMap({mapRef, city}: UseMapProps): Map | null {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.location.latitude,
-          lng: city.location.longitude
+          lat: location.latitude,
+          lng: location.longitude
         },
-        zoom: city.location.zoom
+        zoom: location.zoom
       });
 
       const layer = new TileLayer(
-        MapSettings.TILE_LAYER,
+        Setting.Layer,
         {
-          attribution: MapSettings.ATTRIBUTION,
+          attribution: Setting.Attribution,
         },
       );
 
@@ -38,7 +39,7 @@ function useMap({mapRef, city}: UseMapProps): Map | null {
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, city]);
+  }, [mapRef, location]);
 
   return map;
 }

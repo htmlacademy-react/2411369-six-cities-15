@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CardList from '../../components/card-list/card-list';
-import { AppRoute, CityLocation } from '../../const';
+import { AppRoute, CITY_LOCATIONS } from '../../const';
 import { useDocumentTitle } from '../../hooks/document-title';
 import { Offers } from '../../types/offer';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ type MainScreenProps = {
   offers: Offers[];
 }
 
-const DEFAULT_CITY = CityLocation[2];
+const DEFAULT_CITY = CITY_LOCATIONS[2];
 
 function MainScreen({offers}: MainScreenProps): JSX.Element {
   useDocumentTitle('Main page');
@@ -26,7 +26,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {CityLocation.map((city) => (
+            {CITY_LOCATIONS.map((city) => (
               <li className="locations__item" key={city.name}>
                 <Link
                   className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': isActive(city.name)})}

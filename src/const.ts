@@ -1,3 +1,5 @@
+import { City } from './types/offer';
+
 export const Setting = {
   offersCount: 300
 };
@@ -16,7 +18,8 @@ export const CITIES = [
 
 export type CityName = typeof CITIES[number];
 
-export const CityLocation = [
+
+export const CITY_LOCATIONS: City[] = [
   {
     name: 'Paris',
     location: {

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { Offers } from '../types/offer';
-import { CityLocation, OFFER_TYPE, OfferType } from '../const';
+import { Location, Offers } from '../types/offer';
+import { CITY_LOCATIONS, OFFER_TYPE, OfferType } from '../const';
 
 const GOODS = [
   'Wi-Fi',
@@ -17,16 +17,17 @@ const GOODS = [
 
 const OFFER_COUNT = faker.number.int({ min: 10, max: 30 });
 
-// const getMockLocation = (): Location => ({
-//   latitude: faker.location.latitude(),
-//   longitude: faker.location.longitude(),
-//   zoom: faker.number.int({ min: 1, max: 10 }),
-// });
-
-// const getMockCity = (): City => ({
-//   name: faker.helpers.arrayElement(CITIES),
-//   location: getMockLocation()
-// });
+const getMockLocation = (city: Location): Location => ({
+  latitude: faker.location.latitude({
+    max: city.latitude + 0.01,
+    min: city.latitude - 0.01,
+  }),
+  longitude: faker.location.longitude({
+    max: city.longitude + 0.01,
+    min: city.longitude - 0.01,
+  }),
+  zoom: faker.number.int({ min: 1, max: 10 }),
+});
 
 export const getMockOffer = (): Offers => {
   const randomImagesCount = faker.number.int({ min: 1, max: 6 });
@@ -34,17 +35,15 @@ export const getMockOffer = (): Offers => {
     faker.image.urlLoremFlickr({ category: 'apartment' })
   );
 
+  const city = faker.helpers.arrayElement(CITY_LOCATIONS);
+
   return ({
     id: faker.string.uuid(),
     title: faker.location.streetAddress({ useFullAddress: true }),
     type: faker.helpers.arrayElement<OfferType>(OFFER_TYPE),
     price: faker.number.int({ min: 10, max: 100 }),
-    city: faker.helpers.arrayElement(CityLocation),
-    location: {
-      latitude: 48.862610000000004,
-      longitude: 2.369499,
-      zoom: 16
-    },
+    city,
+    location: getMockLocation(city.location),
     isFavorite: faker.datatype.boolean(0.3),
     isPremium: faker.datatype.boolean(0.3),
     rating: faker.number.int({ min: 0, max: 5 }),
