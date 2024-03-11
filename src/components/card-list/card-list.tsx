@@ -1,42 +1,44 @@
 import classNames from 'classnames';
-import { Offers } from '../../types/offer';
+import { City, Offers } from '../../types/offer';
 import Card from '../card/card';
 import Sort from '../sort/sort';
 import CardListEmpty from '../card-list-empty/card-list-empty';
 import { useState } from 'react';
+import Map from '../map/map';
 
 type CardListProps = {
-  offersCount: number;
-  offers: Offers[];
+  currentLocation: City;
+  currentOffers: Offers[];
+  isEmpty: boolean;
 }
 
-function CardList({offers, offersCount}: CardListProps) {
-  const isEmpty = offers.length === 0;
-  const [activeOffer, setActiveOffer] = useState<string | null>(null);
+function CardList({currentLocation, currentOffers, isEmpty}: CardListProps) {
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const handleMouseHover = (id?: string) => {
-    setActiveOffer(id || null);
+    setActiveOfferId(id || null);
   };
 
   return (
     <div className= {classNames('container', 'cities__places-container', {'cities__places-container--empty': isEmpty})}>
-      {isEmpty ? <CardListEmpty /> : (
-        <section className="cities__places places">
-          <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">{offersCount} places to stay in Amsterdam </b>
-          <p>Current ID: {activeOffer}</p>
-          <Sort />
-          <div className="cities__places-list places__list tabs__content">
-            {offers.map((offer) => (
-              <Card key={offer.id} {...offer} environment="cities" handleMouseHover={handleMouseHover} />
-            ))}
+      {isEmpty ? <CardListEmpty city={currentLocation.name} /> : (
+        <>
+          <section className="cities__places places">
+            <h2 className="visually-hidden">Places</h2>
+            <b className="places__found">{currentOffers.length} places to stay in {currentLocation.name} </b>
+            <Sort />
+            <div className="cities__places-list places__list tabs__content">
+              {currentOffers.map((offer) => (
+                <Card key={offer.id} {...offer} environment="cities" handleMouseHover={handleMouseHover} />
+              ))}
+            </div>
+          </section>
+          <div className='cities__right-section'>
+            <Map city={currentLocation} offers={currentOffers} activeOfferId={activeOfferId} />
+            {/* <section className='cities__map map'></section> */}
           </div>
-        </section>
+        </>
       )}
-      <div className="cities__right-section">
-        <section className="cities__map map"></section>
-      </div>
     </div>
-
   );
 }
 

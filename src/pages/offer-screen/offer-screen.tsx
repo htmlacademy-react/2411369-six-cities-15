@@ -23,8 +23,8 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
   const { name, avatarUrl, isPro } = host;
 
   const [activeOffer, setActiveOffer] = useState<string | null>(null);
-  const handleMouseHover = (index?: string) => {
-    setActiveOffer(index || null);
+  const handleMouseHover = () => {
+    setActiveOffer(null);
   };
 
   return (

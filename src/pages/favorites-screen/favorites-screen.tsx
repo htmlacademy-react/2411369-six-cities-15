@@ -9,8 +9,8 @@ function FavoritesScreen(): JSX.Element {
   useDocumentTitle('Favorites');
 
   const [activeOffer, setActiveOffer] = useState<string | null>(null);
-  const handleMouseHover = (id?: string) => {
-    setActiveOffer(id || null);
+  const handleMouseHover = () => {
+    setActiveOffer(null);
   };
 
   return (
