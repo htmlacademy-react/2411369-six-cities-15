@@ -1,5 +1,5 @@
 import { Review } from '../../types/review';
-import { formatRating } from '../../utils';
+import { formatDate, formatRating } from '../../utils';
 import ReviewsForm from '../reviews-form/reviews-form';
 
 type ReviewListProps = {
@@ -35,7 +35,7 @@ function ReviewsList({ reviews }: ReviewListProps): JSX.Element {
               <p className="reviews__text">
                 {comment}
               </p>
-              <time className="reviews__time" dateTime={date}>April 2019</time>
+              <time className="reviews__time" dateTime={date}>{formatDate(date)}</time>
             </div>
           </li>
         ))}

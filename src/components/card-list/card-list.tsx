@@ -34,7 +34,6 @@ function CardList({currentLocation, currentOffers, isEmpty}: CardListProps) {
           </section>
           <div className='cities__right-section'>
             <Map city={currentLocation} offers={currentOffers} activeOfferId={activeOfferId} />
-            {/* <section className='cities__map map'></section> */}
           </div>
         </>
       )}

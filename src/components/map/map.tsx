@@ -8,7 +8,7 @@ type MapProps = {
   city: City;
   offers: Offers[];
   activeOfferId?: null | string;
-  place?: 'cities' | 'offers';
+  place?: 'cities' | 'offer';
 };
 
 const defaultCustomIcon = new Icon({

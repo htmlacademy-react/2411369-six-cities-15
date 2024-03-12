@@ -6,7 +6,7 @@ import { formatRating } from '../../utils';
 
 type CardProps = Offers & {
   environment: 'cities' | 'favorites' | 'near-places';
-  handleMouseHover: (id?: string) => void;
+  handleMouseHover?: (id: string) => void;
 };
 
 function Card({
@@ -23,10 +23,10 @@ function Card({
 }: CardProps): JSX.Element {
 
   const handleMouseOn = () => {
-    handleMouseHover(id);
+    handleMouseHover?.(id);
   };
   const handleMouseOff = () => {
-    handleMouseHover();
+    handleMouseHover?.('');
   };
 
   const imgWidth = environment === 'favorites' ? '150' : '260';
