@@ -1,31 +1,35 @@
 import { useDocumentTitle } from '../../hooks/document-title';
 import Card from '../../components/card/card';
-import { getMockOffer } from '../../mocks/offers';
 import { Offers } from '../../types/offer';
 import { useParams } from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { reviews } from '../../mocks/reviews';
 import Bookmark from '../../components/bookmark/bookmark';
-import { formatRating } from '../../utils';
-import { useState } from 'react';
+import { formatRating, getNearOffers } from '../../utils';
 import classNames from 'classnames';
+import Map from '../../components/map/map';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type OfferScreenProps = {
   offers: Offers[];
 }
 
-function OfferScreen({offers}: OfferScreenProps): JSX.Element {
+function OfferScreen({ offers }: OfferScreenProps): JSX.Element {
   useDocumentTitle('Offer');
 
-  const {id} = useParams();
-  const offer = offers.filter((item) => item.id.toString() === id);
-  const [{ isFavorite, isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms }] = offer;
+  const { id } = useParams();
+  const foundOffer = offers.find((item): boolean => item.id.toString() === id);
+
+  if (!foundOffer) {
+    return <NotFoundScreen />;
+  }
+
+  const offerPage = {offers, ...foundOffer};
+  const { isFavorite, isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms } = offerPage;
   const { name, avatarUrl, isPro } = host;
 
-  const [activeOffer, setActiveOffer] = useState<string | null>(null);
-  const handleMouseHover = () => {
-    setActiveOffer(null);
-  };
+  const nearOffers = getNearOffers(offerPage);
+  const nearOffersPlusCurrent = [offerPage, ...nearOffers];
 
   return (
     <main className="page__main page__main--offer">
@@ -111,21 +115,23 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
                 </p>
               </div>
             </div>
-            <ReviewsList reviews={reviews} />
+            <ReviewsList reviews={ reviews } />
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map
+          city={offerPage.city}
+          offers={nearOffersPlusCurrent}
+          activeOfferId={foundOffer.id}
+          place='offer'
+        />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          {/* Удалить */}
-          <p>Current ID: {activeOffer}</p>
           <div className="near-places__list places__list">
-            {/* Временное решение */}
-            {Array.from({ length: 3 }, getMockOffer).map((item) => (
-              <Card key={item.id} environment="near-places" {...item} handleMouseHover={handleMouseHover} />
-            ))}
+            {nearOffers.map((offer) =>
+              <Card key={offer.id} environment='near-places' {...offer} />
+            )}
           </div>
         </section>
       </div>
