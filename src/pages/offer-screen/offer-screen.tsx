@@ -9,13 +9,14 @@ import classNames from 'classnames';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useAppSelector } from '../../hooks/store';
+import { selectorOffers } from '../../store/selectors/offers';
 
 function OfferScreen(): JSX.Element {
   useDocumentTitle('Offer');
 
   const { id } = useParams();
 
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(selectorOffers);
   const foundOffer = offers.find((item): boolean => item.id.toString() === id);
 
   if (!foundOffer) {

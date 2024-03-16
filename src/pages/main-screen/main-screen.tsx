@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { offersActions } from '../../store/slice/offers';
+import { selectorCity } from '../../store/selectors/offers';
 
 function MainScreen(): JSX.Element {
   useDocumentTitle('Main page');
 
   const offers = useAppSelector((state) => state.offers);
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector(selectorCity);
   const currentOffers = offers.filter((offer) => offer.city.name === currentCity);
 
   const dispatch = useAppDispatch();
