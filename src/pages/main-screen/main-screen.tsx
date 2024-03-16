@@ -1,19 +1,31 @@
 import CardList from '../../components/card-list/card-list';
-import { AppRoute, CITIES } from '../../const';
+import { CITIES, CityName } from '../../const';
 import { useDocumentTitle } from '../../hooks/document-title';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
-import { useActionCreators, useAppSelector } from '../../hooks/store';
-import { offersActions, offersSelectors } from '../../store/slice/offers';
+import { useAppSelector } from '../../hooks/store';
+import { offersSelectors } from '../../store/slice/offers';
+import { Offer } from '../../types/offer';
 
-function MainScreen(): JSX.Element {
-  useDocumentTitle('Main page');
+type MainScreenProps = {
+  city: CityName;
+};
+
+function MainScreen({ city }: MainScreenProps): JSX.Element {
+  useDocumentTitle(`Offers in ${city}`);
 
   const offers = useAppSelector(offersSelectors.offers);
-  const currentCity = useAppSelector(offersSelectors.city);
-  const currentOffers = offers.filter((offer) => offer.city.name === currentCity);
 
-  const { setCity } = useActionCreators(offersActions);
+  const offersByCity: Partial<Record<CityName, Offer[]>> = {};
+
+  for (const offer of offers) {
+    if (!offersByCity[offer.city.name]) {
+      offersByCity[offer.city.name] = [];
+    }
+    offersByCity[offer.city.name]!.push(offer);
+  }
+
+  const currentOffers = offersByCity[city] ?? [];
 
   const isEmpty = currentOffers.length === 0;
 
@@ -27,20 +39,17 @@ function MainScreen(): JSX.Element {
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {CITIES.map((city) => (
-              <li className="locations__item" key={city.name}>
-                <Link
-                  className={classNames('locations__item-link', 'tabs__item', {
-                    'tabs__item--active': city.name === currentCity,
-                  })}
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    setCity(city.name);
-                  }}
-                  to={AppRoute.Main}
+            {CITIES.map(({ id, name }) => (
+              <li className="locations__item" key={id}>
+                <NavLink
+                  className={({ isActive }) =>
+                    classNames('locations__item-link', 'tabs__item', {
+                      'tabs__item--active': isActive,
+                    })}
+                  to={`/${id}`}
                 >
-                  <span>{city.name}</span>
-                </Link>
+                  <span>{name}</span>
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -48,7 +57,7 @@ function MainScreen(): JSX.Element {
       </div>
       <div className="cities">
         <CardList
-          currentCity={currentCity}
+          currentCity={city}
           currentOffers={currentOffers}
           isEmpty={isEmpty}
         />
