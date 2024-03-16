@@ -9,14 +9,14 @@ import classNames from 'classnames';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useAppSelector } from '../../hooks/store';
-import { selectorOffers } from '../../store/selectors/offers';
+import { offersSelectors } from '../../store/slice/offers';
 
 function OfferScreen(): JSX.Element {
   useDocumentTitle('Offer');
 
   const { id } = useParams();
 
-  const offers = useAppSelector(selectorOffers);
+  const offers = useAppSelector(offersSelectors.offers);
   const foundOffer = offers.find((item): boolean => item.id.toString() === id);
 
   if (!foundOffer) {
@@ -118,7 +118,6 @@ function OfferScreen(): JSX.Element {
           </div>
         </div>
         <Map
-          city={offerPage.city}
           offers={nearOffersPlusCurrent}
           activeOfferId={foundOffer.id}
           place='offer'

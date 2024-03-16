@@ -4,14 +4,13 @@ import { useDocumentTitle } from '../../hooks/document-title';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { offersActions } from '../../store/slice/offers';
-import { selectorCity, selectorOffers } from '../../store/selectors/offers';
+import { offersActions, offersSelectors } from '../../store/slice/offers';
 
 function MainScreen(): JSX.Element {
   useDocumentTitle('Main page');
 
-  const offers = useAppSelector(selectorOffers);
-  const currentCity = useAppSelector(selectorCity);
+  const offers = useAppSelector(offersSelectors.offers);
+  const currentCity = useAppSelector(offersSelectors.city);
   const currentOffers = offers.filter((offer) => offer.city.name === currentCity);
 
   const dispatch = useAppDispatch();
