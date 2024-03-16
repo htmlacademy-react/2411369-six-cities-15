@@ -4,7 +4,7 @@ import { useDocumentTitle } from '../../hooks/document-title';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { setCity } from '../../store/reducer';
+import { offersActions } from '../../store/slice/offers';
 
 function MainScreen(): JSX.Element {
   useDocumentTitle('Main page');
@@ -35,7 +35,7 @@ function MainScreen(): JSX.Element {
                   })}
                   onClick={(evt) => {
                     evt.preventDefault();
-                    dispatch(setCity(city.name));
+                    dispatch(offersActions.setCity(city.name));
                   }}
                   to={AppRoute.Main}
                 >
