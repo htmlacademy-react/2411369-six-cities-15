@@ -1,5 +1,3 @@
-import { City } from './types/offer';
-
 export const Setting = {
   offersCount: 300
 };
@@ -8,19 +6,8 @@ export const APP_NAME = '6 cities';
 export const RATING_STARS_WIDTH_FACTOR = 20;
 
 export const CITIES = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf'
-];
-
-export type CityName = typeof CITIES[number];
-
-
-export const CITY_LOCATIONS: City[] = [
   {
+    id: 'paris',
     name: 'Paris',
     location: {
       latitude: 48.85661,
@@ -29,6 +16,7 @@ export const CITY_LOCATIONS: City[] = [
     }
   },
   {
+    id: 'cologne',
     name: 'Cologne',
     location: {
       latitude: 50.938361,
@@ -37,6 +25,7 @@ export const CITY_LOCATIONS: City[] = [
     }
   },
   {
+    id: 'brussels',
     name: 'Brussels',
     location: {
       latitude: 50.846557,
@@ -45,6 +34,7 @@ export const CITY_LOCATIONS: City[] = [
     }
   },
   {
+    id: 'amsterdam',
     name: 'Amsterdam',
     location: {
       latitude: 52.37454,
@@ -53,6 +43,7 @@ export const CITY_LOCATIONS: City[] = [
     }
   },
   {
+    id: 'hamburg',
     name: 'Hamburg',
     location: {
       latitude: 53.550341,
@@ -61,6 +52,7 @@ export const CITY_LOCATIONS: City[] = [
     }
   },
   {
+    id: 'dusseldorf',
     name: 'Dusseldorf',
     location: {
       latitude: 51.225402,
@@ -68,7 +60,9 @@ export const CITY_LOCATIONS: City[] = [
       zoom: 13
     }
   }
-];
+] as const;
+
+export type CityName = typeof CITIES[number]['name'];
 
 export const OFFER_TYPE = [
   'Apartment',

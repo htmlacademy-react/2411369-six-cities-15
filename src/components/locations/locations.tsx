@@ -5,9 +5,9 @@ function Locations(): JSX.Element {
   return (
     <ul className="locations__list tabs__list">
       {CITIES.map((city) => (
-        <li className="locations__item" key={city}>
+        <li className="locations__item" key={city.name}>
           <Link className="locations__item-link tabs__item" to="#">
-            <span>{city}</span>
+            <span>{city.name}</span>
           </Link>
         </li>
       ))}

@@ -1,40 +1,43 @@
-import { useState } from 'react';
 import CardList from '../../components/card-list/card-list';
-import { AppRoute, CITY_LOCATIONS } from '../../const';
+import { AppRoute, CITIES } from '../../const';
 import { useDocumentTitle } from '../../hooks/document-title';
-import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { setCity } from '../../store/reducer';
 
-type MainScreenProps = {
-  offers: Offer[];
-}
-
-const DEFAULT_CITY = CITY_LOCATIONS[2];
-
-function MainScreen({offers}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
   useDocumentTitle('Main page');
 
-  const [currentLocation, setCurrentLocation] = useState(DEFAULT_CITY);
-  const currentOffers = offers.filter((offer) => offer.city.name === currentLocation.name);
-  const isActive = (city: string) => city === currentLocation.name;
+  const offers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector((state) => state.city);
+  const currentOffers = offers.filter((offer) => offer.city.name === currentCity);
+
+  const dispatch = useAppDispatch();
+
   const isEmpty = currentOffers.length === 0;
 
   return (
-    <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': isEmpty})}>
+    <main
+      className={classNames('page__main', 'page__main--index', {
+        'page__main--index-empty': isEmpty,
+      })}
+    >
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {CITY_LOCATIONS.map((city) => (
+            {CITIES.map((city) => (
               <li className="locations__item" key={city.name}>
                 <Link
-                  className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': isActive(city.name)})}
-                  to={AppRoute.Main}
+                  className={classNames('locations__item-link', 'tabs__item', {
+                    'tabs__item--active': city.name === currentCity,
+                  })}
                   onClick={(evt) => {
                     evt.preventDefault();
-                    setCurrentLocation(city);
+                    dispatch(setCity(city.name));
                   }}
+                  to={AppRoute.Main}
                 >
                   <span>{city.name}</span>
                 </Link>
@@ -44,7 +47,11 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        <CardList currentLocation={currentLocation} currentOffers={currentOffers} isEmpty={isEmpty} />
+        <CardList
+          currentCity={currentCity}
+          currentOffers={currentOffers}
+          isEmpty={isEmpty}
+        />
       </div>
     </main>
   );

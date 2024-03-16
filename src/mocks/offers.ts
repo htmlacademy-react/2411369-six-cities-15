@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Location, Offer } from '../types/offer';
-import { CITY_LOCATIONS, OFFER_TYPE, OfferType } from '../const';
+import { CITIES, OFFER_TYPE, OfferType } from '../const';
 
 const GOODS = [
   'Wi-Fi',
@@ -15,7 +15,7 @@ const GOODS = [
   'Fridge'
 ];
 
-const OFFER_COUNT = faker.number.int({ min: 10, max: 30 });
+const OFFER_COUNT = faker.number.int({ min: 15, max: 50 });
 
 const getMockLocation = (city: Location): Location => ({
   latitude: faker.location.latitude({
@@ -35,7 +35,7 @@ export const getMockOffer = (): Offer => {
     faker.image.urlLoremFlickr({ category: 'apartment' })
   );
 
-  const city = faker.helpers.arrayElement(CITY_LOCATIONS);
+  const city = faker.helpers.arrayElement(CITIES);
 
   return ({
     id: faker.string.uuid(),

@@ -6,14 +6,9 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute, PublicRoute } from '../private-route/private-route';
-import { Offer } from '../../types/offer';
 import Header from '../header/header';
 
-type AppScreenProps = {
-  offers: Offer[];
-}
-
-function App({offers}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -24,7 +19,7 @@ function App({offers}: AppScreenProps): JSX.Element {
           <Route
             index
             path={AppRoute.Main}
-            element={<MainScreen offers={offers} />}
+            element={<MainScreen />}
           />
           <Route
             path={AppRoute.Login}
@@ -48,7 +43,7 @@ function App({offers}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferScreen offers={offers} />}
+            element={<OfferScreen />}
           />
           <Route
             path="*"
