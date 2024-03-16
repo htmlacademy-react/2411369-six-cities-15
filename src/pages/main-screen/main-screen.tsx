@@ -3,7 +3,7 @@ import { AppRoute, CITIES } from '../../const';
 import { useDocumentTitle } from '../../hooks/document-title';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { offersActions, offersSelectors } from '../../store/slice/offers';
 
 function MainScreen(): JSX.Element {
@@ -13,7 +13,7 @@ function MainScreen(): JSX.Element {
   const currentCity = useAppSelector(offersSelectors.city);
   const currentOffers = offers.filter((offer) => offer.city.name === currentCity);
 
-  const dispatch = useAppDispatch();
+  const { setCity } = useActionCreators(offersActions);
 
   const isEmpty = currentOffers.length === 0;
 
@@ -35,7 +35,7 @@ function MainScreen(): JSX.Element {
                   })}
                   onClick={(evt) => {
                     evt.preventDefault();
-                    dispatch(offersActions.setCity(city.name));
+                    setCity(city.name);
                   }}
                   to={AppRoute.Main}
                 >
