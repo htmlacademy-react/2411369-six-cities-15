@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { City, Offers } from '../../types/offer';
+import { City, Offer } from '../../types/offer';
 import Card from '../card/card';
 import Sort from '../sort/sort';
 import CardListEmpty from '../card-list-empty/card-list-empty';
@@ -8,7 +8,7 @@ import Map from '../map/map';
 
 type CardListProps = {
   currentLocation: City;
-  currentOffers: Offers[];
+  currentOffers: Offer[];
   isEmpty: boolean;
 }
 

@@ -1,6 +1,6 @@
 import { useDocumentTitle } from '../../hooks/document-title';
 import Card from '../../components/card/card';
-import { Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { useParams } from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { reviews } from '../../mocks/reviews';
@@ -11,7 +11,7 @@ import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type OfferScreenProps = {
-  offers: Offers[];
+  offers: Offer[];
 }
 
 function OfferScreen({ offers }: OfferScreenProps): JSX.Element {

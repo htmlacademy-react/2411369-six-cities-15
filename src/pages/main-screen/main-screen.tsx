@@ -2,12 +2,12 @@ import { useState } from 'react';
 import CardList from '../../components/card-list/card-list';
 import { AppRoute, CITY_LOCATIONS } from '../../const';
 import { useDocumentTitle } from '../../hooks/document-title';
-import { Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 type MainScreenProps = {
-  offers: Offers[];
+  offers: Offer[];
 }
 
 const DEFAULT_CITY = CITY_LOCATIONS[2];

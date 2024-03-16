@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Location, Offers } from '../types/offer';
+import { Location, Offer } from '../types/offer';
 import { CITY_LOCATIONS, OFFER_TYPE, OfferType } from '../const';
 
 const GOODS = [
@@ -29,7 +29,7 @@ const getMockLocation = (city: Location): Location => ({
   zoom: faker.number.int({ min: 1, max: 10 }),
 });
 
-export const getMockOffer = (): Offers => {
+export const getMockOffer = (): Offer => {
   const randomImagesCount = faker.number.int({ min: 1, max: 6 });
   const images: string[] = Array.from({ length: randomImagesCount }, () =>
     faker.image.urlLoremFlickr({ category: 'apartment' })
@@ -61,4 +61,4 @@ export const getMockOffer = (): Offers => {
   });
 };
 
-export const offers: Offers[] = Array.from({ length: OFFER_COUNT }, () => getMockOffer());
+export const offers: Offer[] = Array.from({ length: OFFER_COUNT }, () => getMockOffer());

@@ -6,11 +6,11 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute, PublicRoute } from '../private-route/private-route';
-import { Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import Header from '../header/header';
 
 type AppScreenProps = {
-  offers: Offers[];
+  offers: Offer[];
 }
 
 function App({offers}: AppScreenProps): JSX.Element {

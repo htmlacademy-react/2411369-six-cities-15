@@ -1,12 +1,12 @@
 import { Icon, Marker, layerGroup } from 'leaflet';
-import { City, Offers } from '../../types/offer';
+import { City, Offer } from '../../types/offer';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 
 type MapProps = {
   city: City;
-  offers: Offers[];
+  offers: Offer[];
   activeOfferId?: null | string;
   place?: 'cities' | 'offer';
 };

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import classNames from 'classnames';
 import Bookmark from '../bookmark/bookmark';
 import { formatRating } from '../../utils';
 
-type CardProps = Offers & {
+type CardProps = Offer & {
   environment: 'cities' | 'favorites' | 'near-places';
   handleMouseHover?: (id: string) => void;
 };
