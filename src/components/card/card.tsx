@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import classNames from 'classnames';
 import Bookmark from '../bookmark/bookmark';
 import { formatRating } from '../../utils';
+import { ComponentProps } from 'react';
 
-type CardProps = Offers & {
+type CardProps = Offer & Pick<ComponentProps<'article'>, 'onMouseEnter' | 'onMouseLeave'> & {
   environment: 'cities' | 'favorites' | 'near-places';
-  handleMouseHover?: (id: string) => void;
 };
 
 function Card({
@@ -19,21 +19,15 @@ function Card({
   rating,
   previewImage,
   environment,
-  handleMouseHover
+  onMouseEnter,
+  onMouseLeave
 }: CardProps): JSX.Element {
-
-  const handleMouseOn = () => {
-    handleMouseHover?.(id);
-  };
-  const handleMouseOff = () => {
-    handleMouseHover?.('');
-  };
 
   const imgWidth = environment === 'favorites' ? '150' : '260';
   const imgHeight = environment === 'favorites' ? '110' : '200';
 
   return (
-    <article className={`${environment}__card place-card`} onMouseEnter={handleMouseOn} onMouseLeave={handleMouseOff} >
+    <article className={`${environment}__card place-card`} data-id={id} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

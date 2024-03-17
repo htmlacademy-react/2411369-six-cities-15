@@ -1,5 +1,5 @@
 import { offers } from './mocks/offers';
-import { Offers } from './types/offer';
+import { Offer } from './types/offer';
 
 const enum Default {
   ScalingFactor = 100 / 5
@@ -11,8 +11,8 @@ export function formatRating(rating: number) {
 
 const MAX_NEAR_OFFERS = 3;
 
-export const getNearOffers = (offer: Offers): Offers[] => {
-  const nearOffers = [];
+export const getNearOffers = (offer: Offer): Offer[] => {
+  const nearOffers: Offer[] = [];
 
   for (let i = 0; i < offers.length; i++) {
     if (offers[i].id !== offer.id && offers[i].city.name === offer.city.name) {

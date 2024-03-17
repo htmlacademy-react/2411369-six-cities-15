@@ -1,13 +1,14 @@
 import { Icon, Marker, layerGroup } from 'leaflet';
-import { City, Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/use-map';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import { CITIES, CityName, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import { useAppSelector } from '../../hooks/store';
+import { offersSelectors } from '../../store/slice/offers';
 
 type MapProps = {
-  city: City;
-  offers: Offers[];
-  activeOfferId?: null | string;
+  city: CityName;
+  offers: Offer[];
   place?: 'cities' | 'offer';
 };
 
@@ -26,11 +27,12 @@ const currentCustomIcon = new Icon({
 function Map({
   city,
   offers,
-  activeOfferId,
   place = 'cities',
 }: MapProps): JSX.Element {
+
   const mapRef = useRef(null);
-  const location = city.location;
+  const activeId = useAppSelector(offersSelectors.activeId);
+  const location = CITIES.find((item) => item.name === city)!.location;
   const map = useMap({ mapRef, location });
   const layer = useRef(layerGroup());
 
@@ -44,7 +46,7 @@ function Map({
 
         marker
           .setIcon(
-            offer.id === activeOfferId
+            offer.id === activeId
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -56,7 +58,7 @@ function Map({
         currentLayer.clearLayers();
       };
     }
-  }, [map, offers, activeOfferId]);
+  }, [map, offers, activeId]);
 
   useEffect(() => {
     if (map) {
