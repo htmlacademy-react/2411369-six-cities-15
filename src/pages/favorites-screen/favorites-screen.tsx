@@ -3,15 +3,10 @@ import Footer from '../../components/footer/footer';
 import Card from '../../components/card/card';
 import { useDocumentTitle } from '../../hooks/document-title';
 import { getMockOffer } from '../../mocks/offers';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 
 function FavoritesScreen(): JSX.Element {
   useDocumentTitle('Favorites');
-
-  const [activeOffer, setActiveOffer] = useState<string | null>(null);
-  const handleMouseHover = () => {
-    setActiveOffer(null);
-  };
 
   return (
     <Fragment>
@@ -24,7 +19,6 @@ function FavoritesScreen(): JSX.Element {
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
                     {/* Удалить */}
-                    <p>Current ID: {activeOffer}</p>
                     <Link className="locations__item-link" to="#">
                       <span>Amsterdam</span>
                     </Link>
@@ -33,7 +27,7 @@ function FavoritesScreen(): JSX.Element {
                 <div className="favorites__places">
                   {/* Временное решение */}
                   {Array.from({ length: 2 }, getMockOffer).map((item) => (
-                    <Card key={item.id} environment="favorites" {...item} handleMouseHover={handleMouseHover} />
+                    <Card key={item.id} environment="favorites" {...item} />
                   ))}
                 </div>
               </li>
@@ -49,7 +43,7 @@ function FavoritesScreen(): JSX.Element {
                 <div className="favorites__places">
                   {/* Временное решение */}
                   {Array.from({ length: 2 }, getMockOffer).map((item) => (
-                    <Card key={item.id} environment="favorites" {...item} handleMouseHover={handleMouseHover} />
+                    <Card key={item.id} environment="favorites" {...item} />
                   ))}
                 </div>
               </li>
