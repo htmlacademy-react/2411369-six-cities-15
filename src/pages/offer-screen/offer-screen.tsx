@@ -118,8 +118,8 @@ function OfferScreen(): JSX.Element {
           </div>
         </div>
         <Map
+          city={offerPage.city.name}
           offers={nearOffersPlusCurrent}
-          activeOfferId={foundOffer.id}
           place='offer'
         />
       </section>
