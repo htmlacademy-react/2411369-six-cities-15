@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks/store';
 import { offersSelectors } from '../../store/slice/offers';
-import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
   city: CityName;
@@ -16,15 +15,7 @@ function MainScreen({ city }: MainScreenProps): JSX.Element {
 
   const offers = useAppSelector(offersSelectors.offers);
 
-  const offersByCity: Partial<Record<CityName, Offer[]>> = {};
-
-  for (const offer of offers) {
-    if (!offersByCity[offer.city.name]) {
-      offersByCity[offer.city.name] = [];
-    }
-    offersByCity[offer.city.name]!.push(offer);
-  }
-
+  const offersByCity = Object.groupBy(offers, (offer) => offer.city.name);
   const currentOffers = offersByCity[city] ?? [];
 
   const isEmpty = currentOffers.length === 0;
