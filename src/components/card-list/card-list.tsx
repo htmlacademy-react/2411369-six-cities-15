@@ -4,47 +4,44 @@ import Card from '../card/card';
 import Sort from '../sort/sort';
 import CardListEmpty from '../card-list-empty/card-list-empty';
 import Map from '../map/map';
-import { CityName } from '../../const';
-import { useActionCreators } from '../../hooks/store';
-import { offersActions } from '../../store/slice/offers';
+import { CityName, RequstStatus } from '../../const';
+import { useActionCreators, useAppSelector } from '../../hooks/store';
+import { offersActions, offersSelectors } from '../../store/slice/offers';
 import { MouseEvent, useState } from 'react';
 import { SortOption } from '../sort';
+import { sortOffers } from '../../utils';
+import Loading from '../loading/loading';
 
 type CardListProps = {
   currentCity: CityName;
   currentOffers: Offer[];
-  isEmpty: boolean;
+  hasOffers: boolean;
 }
 
-function CardList({currentCity, currentOffers, isEmpty}: CardListProps) {
+function CardList({currentCity, currentOffers, hasOffers}: CardListProps) {
+  const status = useAppSelector(offersSelectors.status);
+  const isLoading = status === RequstStatus.Loading;
+
   const { setActiveId } = useActionCreators(offersActions);
   const [ activeSort, setActiveSort ] = useState(SortOption.Popular);
+  const sortedOffers = sortOffers(currentOffers, activeSort);
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>) => {
     const target = evt.currentTarget as HTMLElement;
     const id = target.dataset.id;
     setActiveId(id);
   };
-
   const handleMouseLeave = () => {
     setActiveId(undefined);
   };
 
-  let sortedOffers = currentOffers;
-
-  if (activeSort === SortOption.PriceLowToHigh) {
-    sortedOffers = currentOffers.toSorted((a: Offer, b: Offer) => a.price - b.price);
-  }
-  if (activeSort === SortOption.PriceHighToLow) {
-    sortedOffers = currentOffers.toSorted((a: Offer, b: Offer) => b.price - a.price);
-  }
-  if (activeSort === SortOption.TopRatedFirst) {
-    sortedOffers = currentOffers.toSorted((a: Offer, b: Offer) => b.rating - a.rating);
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
-    <div className= {classNames('container', 'cities__places-container', {'cities__places-container--empty': isEmpty})}>
-      {isEmpty ? <CardListEmpty city={currentCity} /> : (
+    <div className= {classNames('container', 'cities__places-container', {'cities__places-container--empty': !hasOffers})}>
+      {!hasOffers ? <CardListEmpty city={currentCity} /> : (
         <>
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>

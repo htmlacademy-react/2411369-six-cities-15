@@ -1,10 +1,11 @@
 import CardList from '../../components/card-list/card-list';
-import { CITIES, CityName } from '../../const';
+import { CITIES, CityName, RequstStatus } from '../../const';
 import { useDocumentTitle } from '../../hooks/document-title';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
-import { useAppSelector } from '../../hooks/store';
-import { offersSelectors } from '../../store/slice/offers';
+import { useActionCreators, useAppSelector } from '../../hooks/store';
+import { offersActions, offersSelectors } from '../../store/slice/offers';
+import { useEffect } from 'react';
 
 type MainScreenProps = {
   city: CityName;
@@ -14,16 +15,22 @@ function MainScreen({ city }: MainScreenProps): JSX.Element {
   useDocumentTitle(`Offers in ${city}`);
 
   const offers = useAppSelector(offersSelectors.offers);
-
   const offersByCity = Object.groupBy(offers, (offer) => offer.city.name);
   const currentOffers = offersByCity[city] ?? [];
+  const hasOffers = Boolean(currentOffers.length);
+  const status = useAppSelector(offersSelectors.status);
+  const { fetchOffers } = useActionCreators(offersActions);
 
-  const isEmpty = currentOffers.length === 0;
+  useEffect(() => {
+    if (status === RequstStatus.Idle) {
+      fetchOffers();
+    }
+  }, [status, fetchOffers]);
 
   return (
     <main
       className={classNames('page__main', 'page__main--index', {
-        'page__main--index-empty': isEmpty,
+        'page__main--index-empty': !hasOffers,
       })}
     >
       <h1 className="visually-hidden">Cities</h1>
@@ -50,7 +57,7 @@ function MainScreen({ city }: MainScreenProps): JSX.Element {
         <CardList
           currentCity={city}
           currentOffers={currentOffers}
-          isEmpty={isEmpty}
+          hasOffers={hasOffers}
         />
       </div>
     </main>

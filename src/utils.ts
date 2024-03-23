@@ -1,3 +1,4 @@
+import { SortOption } from './components/sort';
 import { offers } from './mocks/offers';
 import { Offer } from './types/offer';
 
@@ -29,4 +30,17 @@ export const getNearOffers = (offer: Offer): Offer[] => {
 
 export function formatDate(date: string) {
   return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date(date));
+}
+
+export function sortOffers(allOffers: Offer[], sortOption: SortOption) {
+  switch (sortOption) {
+    case SortOption.PriceLowToHigh:
+      return allOffers.toSorted((a, b) => a.price - b.price);
+    case SortOption.PriceHighToLow:
+      return allOffers.toSorted((a, b) => b.price - a.price);
+    case SortOption.TopRatedFirst:
+      return allOffers.toSorted((a, b) => b.rating - a.rating);
+    default:
+      return allOffers;
+  }
 }
