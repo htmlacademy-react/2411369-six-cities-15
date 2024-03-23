@@ -11,5 +11,6 @@ export const useAppStore: () => typeof store = useStore;
 export const useActionCreators = <Actions extends ActionCreatorsMapObject>(actions: Actions) => {
   const dispatch = useAppDispatch();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return useMemo(() => bindActionCreators(actions, dispatch), []);
 };
