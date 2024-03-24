@@ -15,11 +15,14 @@ const initialState: UserState = {
 };
 
 const userSlice = createSlice({
-  initialState,
   name: 'user',
+  initialState,
   reducers: {
     setAuthorization(state, action: PayloadAction<AuthorizationStatus>) {
       state.authorizationStatus = action.payload;
+    },
+    setUnAuth: (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
     }
   },
   selectors: {

@@ -6,18 +6,17 @@ import { userSelectors } from '../../store/slice/user';
 
 type NavigationProps = {
   pathname: string;
-}
+};
 
-function Navigation({pathname}: NavigationProps): JSX.Element {
+function Navigation({ pathname }: NavigationProps): JSX.Element {
   const location = pathname;
   const loginLink: string = AppRoute.Login;
   const isLoginPage = loginLink === location;
 
   const authorizationStatus = useAppSelector(userSelectors.authorizationStatus);
+
   if (isLoginPage) {
-    return (
-      <nav className="header__nav"></nav>
-    );
+    return <nav className="header__nav"></nav>;
   }
 
   return (
@@ -27,7 +26,10 @@ function Navigation({pathname}: NavigationProps): JSX.Element {
       ) : (
         <ul className="header__nav-list">
           <li className="header__nav-item user">
-            <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
+            <Link
+              className="header__nav-link header__nav-link--profile"
+              to={AppRoute.Login}
+            >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__signout">Sign in</span>
             </Link>
