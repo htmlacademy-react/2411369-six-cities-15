@@ -5,10 +5,20 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import { PrivateRoute, PublicRoute } from '../private-route/private-route';
+import { PrivateRoute, PublicRoute } from '../access-route/access-route';
 import Header from '../header/header';
+import { useAppSelector } from '../../hooks/store';
+import { userSelectors } from '../../store/slice/user';
 
 function App(): JSX.Element {
+  const authorizationStatus = useAppSelector(userSelectors.authorizationStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return (
+      <LoginScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -20,7 +30,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Login}
             element={
-              <PublicRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PublicRoute authorizationStatus={authorizationStatus}>
                 <LoginScreen />
               </PublicRoute>
             }
@@ -28,7 +38,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
                 <FavoritesScreen />
               </PrivateRoute>
             }

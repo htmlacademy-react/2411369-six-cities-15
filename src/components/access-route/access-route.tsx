@@ -6,7 +6,6 @@ type AccessRouteProps = {
   children: JSX.Element;
 }
 
-
 const createAccessRoute = (status: AuthorizationStatus, fallback: AppRoute) =>
   function AccesRoute({ authorizationStatus, children }: AccessRouteProps) {
     return (
