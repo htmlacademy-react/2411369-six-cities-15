@@ -1,11 +1,11 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, CITIES } from '../../const';
+import { AppRoute, CITIES } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import { PrivateRoute, PublicRoute } from '../private-route/private-route';
+import { PrivateRoute, PublicRoute } from '../access-route/access-route';
 import Header from '../header/header';
 
 function App(): JSX.Element {
@@ -20,7 +20,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Login}
             element={
-              <PublicRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PublicRoute>
                 <LoginScreen />
               </PublicRoute>
             }
@@ -28,7 +28,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute>
                 <FavoritesScreen />
               </PrivateRoute>
             }

@@ -16,8 +16,8 @@ const initialState: OffersState = {
 };
 
 const offersSlice = createSlice({
-  initialState,
   name: 'offers',
+  initialState,
   reducers: {
     setActiveId(state, action: PayloadAction<Offer['id'] | undefined>) {
       state.activeId = action.payload;
