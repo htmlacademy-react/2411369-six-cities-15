@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Offer } from '../../types/offer';
-import { fetchOffers } from '../thunk/offers';
+import { FullOffer, ServerOffer } from '../../types/offer';
+import { fetchAllOffers } from '../thunk/offers';
 import { RequstStatus } from '../../const';
 
 type OffersState = {
-  activeId?: Offer['id'];
-  offers: Offer[];
+  activeId?: FullOffer['id'] | null;
+  offers: ServerOffer[];
   status: RequstStatus;
 };
 
 const initialState: OffersState = {
-  activeId: undefined,
+  activeId: null,
   offers: [],
   status: RequstStatus.Idle
 };
@@ -19,27 +19,31 @@ const offersSlice = createSlice({
   name: 'offers',
   initialState,
   reducers: {
-    setActiveId(state, action: PayloadAction<Offer['id'] | undefined>) {
+    setActiveId(state, action: PayloadAction<ServerOffer['id'] | undefined>) {
       state.activeId = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAllOffers.pending, (state) => {
+        state.status = RequstStatus.Loading;
+      })
+      .addCase(fetchAllOffers.fulfilled, (state, action) => {
+        state.status = RequstStatus.Success;
+        state.offers = action.payload;
+      })
+      .addCase(fetchAllOffers.rejected, (state) => {
+        state.status = RequstStatus.Failed;
+      });
   },
   selectors: {
     activeId: (state) => state.activeId,
     offers: (state) => state.offers,
     status: (state) => state.status
-  },
-  extraReducers: (build) => {
-    build.addCase(fetchOffers.pending, (state) => {
-      state.status = RequstStatus.Loading;
-    });
-    build.addCase(fetchOffers.fulfilled, (state, action) => {
-      state.offers = action.payload;
-      state.status = RequstStatus.Succeeded;
-    });
   }
 });
 
-const offersActions = {...offersSlice.actions, fetchOffers};
+const offersActions = {...offersSlice.actions, fetchAllOffers};
 const offersSelectors = offersSlice.selectors;
 
 export { offersSlice, offersActions, offersSelectors };
