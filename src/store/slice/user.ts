@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, RequstStatus } from '../../const';
 import { UserData } from '../../types/user';
 import { checkAuthorization, login, logout } from '../thunk/user';
-import { dropToken, saveToken } from '../../services/token';
 
 type UserState = {
   requestStatus: RequstStatus;

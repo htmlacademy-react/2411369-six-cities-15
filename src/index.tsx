@@ -6,10 +6,10 @@ import { store } from './store';
 import './polyfills';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getToken } from './services/token';
-import { userActions } from './store/slice/user';
+// import { getToken } from './services/token';
+// import { userActions } from './store/slice/user';
 
-store.dispatch(getToken() ? userActions.checkAuthorization() : userActions.setUnAuth());
+// store.dispatch(getToken() ? userActions.checkAuthorization() : userActions.logout);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

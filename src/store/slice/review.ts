@@ -48,4 +48,4 @@ const reviewsSlice = createSlice({
 const reviewsActions = {...reviewsSlice.actions, ...commentsThunks};
 const reviewsSelector = reviewsSlice.selectors;
 
-export { reviewsActions, reviewsSelector };
+export { reviewsActions, reviewsSelector, reviewsSlice };

@@ -19,13 +19,13 @@ function MainScreen({ city }: MainScreenProps): JSX.Element {
   const currentOffers = offersByCity[city] ?? [];
   const hasOffers = Boolean(currentOffers.length);
   const status = useAppSelector(offersSelectors.status);
-  const { fetchOffers } = useActionCreators(offersActions);
+  const { fetchAllOffers } = useActionCreators(offersActions);
 
   useEffect(() => {
     if (status === RequstStatus.Idle) {
-      fetchOffers();
+      fetchAllOffers();
     }
-  }, [status, fetchOffers]);
+  }, [status, fetchAllOffers]);
 
   return (
     <main

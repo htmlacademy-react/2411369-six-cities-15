@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import LoggedNavigation from '../logged-navigation/logged-navigation';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks/store';
-import { userSelectors } from '../../store/slice/user';
+import { AppRoute } from '../../const';
+import { useAuth } from '../../hooks/user-auth';
 
 type NavigationProps = {
   pathname: string;
@@ -13,7 +12,7 @@ function Navigation({ pathname }: NavigationProps): JSX.Element {
   const loginLink: string = AppRoute.Login;
   const isLoginPage = loginLink === location;
 
-  const authorizationStatus = useAppSelector(userSelectors.authorizationStatus);
+  const isAuthorized = useAuth();
 
   if (isLoginPage) {
     return <nav className="header__nav"></nav>;
@@ -21,7 +20,7 @@ function Navigation({ pathname }: NavigationProps): JSX.Element {
 
   return (
     <nav className="header__nav">
-      {authorizationStatus === AuthorizationStatus.Auth ? (
+      {isAuthorized ? (
         <LoggedNavigation pathname={pathname} />
       ) : (
         <ul className="header__nav-list">
