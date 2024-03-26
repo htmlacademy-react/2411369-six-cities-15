@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Offer } from '../../types/offer';
+import { ServerOffer } from '../../types/offer';
 import classNames from 'classnames';
 import Bookmark from '../bookmark/bookmark';
 import { formatRating } from '../../utils';
 import { ComponentProps } from 'react';
 
-type CardProps = Offer & Pick<ComponentProps<'article'>, 'onMouseEnter' | 'onMouseLeave'> & {
+type CardProps = ServerOffer & Pick<ComponentProps<'article'>, 'onMouseEnter' | 'onMouseLeave'> & {
   environment: 'cities' | 'favorites' | 'near-places';
 };
 
@@ -22,7 +22,6 @@ function Card({
   onMouseEnter,
   onMouseLeave
 }: CardProps): JSX.Element {
-
   const imgWidth = environment === 'favorites' ? '150' : '260';
   const imgHeight = environment === 'favorites' ? '110' : '200';
 

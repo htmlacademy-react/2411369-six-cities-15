@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Offer } from '../../types/offer';
+import { ServerOffer } from '../../types/offer';
 import Card from '../card/card';
 import Sort from '../sort/sort';
 import CardListEmpty from '../card-list-empty/card-list-empty';
@@ -14,11 +14,11 @@ import Loading from '../loading/loading';
 
 type CardListProps = {
   currentCity: CityName;
-  currentOffers: Offer[];
+  currentOffers: ServerOffer[];
   hasOffers: boolean;
 }
 
-function CardList({currentCity, currentOffers, hasOffers}: CardListProps) {
+function CardList({ currentCity, currentOffers, hasOffers }: CardListProps) {
   const status = useAppSelector(offersSelectors.status);
   const isLoading = status === RequstStatus.Loading;
 
@@ -49,7 +49,7 @@ function CardList({currentCity, currentOffers, hasOffers}: CardListProps) {
             <Sort current={activeSort} setter={setActiveSort} />
             <div className="cities__places-list places__list tabs__content">
               {sortedOffers.map((offer) => (
-                <Card key={offer.id} environment="cities" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...offer} />
+                <Card key={offer.id} {...offer} environment="cities" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
               ))}
             </div>
           </section>
