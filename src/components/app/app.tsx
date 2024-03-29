@@ -7,25 +7,21 @@ import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute, PublicRoute } from '../access-route/access-route';
 import Header from '../header/header';
-// import { getToken } from '../../services/token';
-// import { useEffect } from 'react';
-// import { useActionCreators } from '../../hooks/store';
-// import { userActions } from '../../store/slice/user';
-// import { offerActions } from '../../store/slice/offer';
-// import { offersActions } from '../../store/slice/offers';
-
-// const {  fetchAllOffers } = useActionCreators(offersActions);
-// const { checkAuthorization } = useActionCreators(userActions);
-
+import { getToken } from '../../services/token';
+import { useEffect } from 'react';
+import { useActionCreators } from '../../hooks/store';
+import { userActions } from '../../store/slice/user';
 
 function App(): JSX.Element {
-  // const token = getToken();
+  // Оставить тут или вынести в index.tsx?
+  const token = getToken();
+  const { checkAuthorization } = useActionCreators(userActions);
 
-  // useEffect(() => {
-  //   if (token) {
-  //     checkAuthorization();
-  //   }
-  // }, [token, checkAuthorization]);
+  useEffect(() => {
+    if (token) {
+      checkAuthorization();
+    }
+  }, [token, checkAuthorization]);
 
   return (
     <BrowserRouter>

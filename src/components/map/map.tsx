@@ -1,5 +1,5 @@
 import { Icon, Marker, layerGroup } from 'leaflet';
-import { Offer } from '../../types/offer';
+import { ServerOffer } from '../../types/offer';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/use-map';
 import { CITIES, CityName, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
@@ -8,8 +8,9 @@ import { offersSelectors } from '../../store/slice/offers';
 
 type MapProps = {
   city: CityName;
-  offers: Offer[];
+  offers: ServerOffer[];
   place?: 'cities' | 'offer';
+  offerById?: string;
 };
 
 const defaultCustomIcon = new Icon({
@@ -27,6 +28,7 @@ const currentCustomIcon = new Icon({
 function Map({
   city,
   offers,
+  offerById,
   place = 'cities',
 }: MapProps): JSX.Element {
 

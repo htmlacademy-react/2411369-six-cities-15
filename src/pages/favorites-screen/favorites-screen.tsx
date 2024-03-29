@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Card from '../../components/card/card';
 import { useDocumentTitle } from '../../hooks/document-title';
-import { getMockOffer } from '../../mocks/offers';
 import { Fragment } from 'react';
 
 function FavoritesScreen(): JSX.Element {
@@ -26,9 +25,9 @@ function FavoritesScreen(): JSX.Element {
                 </div>
                 <div className="favorites__places">
                   {/* Временное решение */}
-                  {Array.from({ length: 2 }, getMockOffer).map((item) => (
+                  {/* {Array.from({ length: 2 }, getMockOffer).map((item) => (
                     <Card key={item.id} environment="favorites" {...item} />
-                  ))}
+                  ))} */}
                 </div>
               </li>
 
@@ -42,9 +41,9 @@ function FavoritesScreen(): JSX.Element {
                 </div>
                 <div className="favorites__places">
                   {/* Временное решение */}
-                  {Array.from({ length: 2 }, getMockOffer).map((item) => (
+                  {/* {Array.from({ length: 2 }, getMockOffer).map((item) => (
                     <Card key={item.id} environment="favorites" {...item} />
-                  ))}
+                  ))} */}
                 </div>
               </li>
             </ul>

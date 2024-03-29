@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RequstStatus } from '../../const';
 import { Review } from '../../types/review';
-import { commentsThunks } from '../thunk/comments';
+import { fetchReviews, postReview } from '../thunk/reviews';
 
 type ReviewState = {
   items: Review[];
@@ -19,33 +19,33 @@ const reviewsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(commentsThunks.fetchComments.fulfilled, (state, action) => {
+      .addCase(fetchReviews.fulfilled, (state, action) => {
         state.items = action.payload;
         state.status = RequstStatus.Success;
       })
-      .addCase(commentsThunks.fetchComments.rejected, (state) => {
+      .addCase(fetchReviews.rejected, (state) => {
         state.status = RequstStatus.Failed;
       })
-      .addCase(commentsThunks.fetchComments.pending, (state) => {
+      .addCase(fetchReviews.pending, (state) => {
         state.status = RequstStatus.Loading;
       })
-      .addCase(commentsThunks.postComment.fulfilled, (state, action) => {
+      .addCase(postReview.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
-      .addCase(commentsThunks.postComment.rejected, (state) => {
+      .addCase(postReview.rejected, (state) => {
         state.status = RequstStatus.Failed;
       })
-      .addCase(commentsThunks.postComment.pending, (state) => {
+      .addCase(postReview.pending, (state) => {
         state.status = RequstStatus.Loading;
       });
   },
   selectors: {
     reviews: (state) => state.items,
-    reviewsStatus: (state: ReviewState) => state.status
+    reviewStatus: (state: ReviewState) => state.status
   }
 });
 
-const reviewsActions = {...reviewsSlice.actions, ...commentsThunks};
+const reviewsActions = {...reviewsSlice.actions, fetchComments: fetchReviews, postComment: postReview};
 const reviewsSelector = reviewsSlice.selectors;
 
 export { reviewsActions, reviewsSelector, reviewsSlice };

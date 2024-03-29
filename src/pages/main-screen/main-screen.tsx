@@ -19,6 +19,7 @@ function MainScreen({ city }: MainScreenProps): JSX.Element {
   const currentOffers = offersByCity[city] ?? [];
   const hasOffers = Boolean(currentOffers.length);
   const status = useAppSelector(offersSelectors.status);
+
   const { fetchAllOffers } = useActionCreators(offersActions);
 
   useEffect(() => {

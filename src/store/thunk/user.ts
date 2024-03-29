@@ -4,7 +4,7 @@ import { createAppAsyncThunk } from '../../hooks/store';
 import { dropToken, saveToken } from '../../services/token';
 
 export const checkAuthorization = createAppAsyncThunk<UserData, undefined>(
-  'user/ckeckAuthorization',
+  'user/ckeckAuth',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<UserData>(APIRoute.Login);
     return data;

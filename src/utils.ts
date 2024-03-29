@@ -1,6 +1,7 @@
 import { SortOption } from './components/sort';
-// import { offers } from './mocks/offers';
+import { CityName } from './const';
 import { ServerOffer } from './types/offer';
+import { Review } from './types/review';
 
 const enum Default {
   ScalingFactor = 100 / 5
@@ -10,26 +11,34 @@ export function formatRating(rating: number) {
   return `${Math.round(Default.ScalingFactor * rating)}%`;
 }
 
-// const MAX_NEAR_OFFERS = 3;
+const MAX_NEAR_OFFERS = 3;
 
-// export const getNearOffers = (offer: Offer): Offer[] => {
-//   const nearOffers: Offer[] = [];
+export const getNearOffers = (
+  offers: ServerOffer[],
+  id: string | undefined,
+  city: CityName
+) => {
+  const nearOffers: ServerOffer[] = [];
 
-//   for (let i = 0; i < offers.length; i++) {
-//     if (offers[i].id !== offer.id && offers[i].city.name === offer.city.name) {
-//       nearOffers.push(offers[i]);
-//     }
+  for (const offer of offers) {
+    if (id !== offer.id && city === offer.city.name) {
+      nearOffers.push(offer);
+    }
 
-//     if (nearOffers.length >= MAX_NEAR_OFFERS) {
-//       break;
-//     }
-//   }
+    if (nearOffers.length === MAX_NEAR_OFFERS) {
+      break;
+    }
+  }
 
-//   return nearOffers;
-// };
+  return nearOffers;
+};
 
 export function formatDate(date: string) {
   return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date(date));
+}
+
+export function sortReviewsDate(reviews: Review[]) {
+  return reviews.toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function sortOffers(allOffers: ServerOffer[], sortOption: SortOption) {

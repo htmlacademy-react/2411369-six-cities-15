@@ -3,8 +3,8 @@ import { APIRoute } from '../../const';
 import { createAppAsyncThunk } from '../../hooks/store';
 import { FullOffer } from '../../types/offer';
 
-const fetchComments = createAppAsyncThunk<Review[], FullOffer['id']>(
-  'comments/fetch',
+export const fetchReviews = createAppAsyncThunk<Review[], FullOffer['id']>(
+  'reviews/fetch',
   async (offerId, { extra: api }) => {
     const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${offerId}`);
     return data;
@@ -19,12 +19,10 @@ type PostCommentProps = {
   offerId: FullOffer['id'];
 }
 
-const postComment = createAppAsyncThunk<Review, PostCommentProps>(
-  'comments/post',
+export const postReview = createAppAsyncThunk<Review, PostCommentProps>(
+  'reviews/post',
   async ({ body, offerId }, { extra: api }) => {
     const { data } = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, body);
     return data;
   }
 );
-
-export const commentsThunks = { fetchComments, postComment };

@@ -1,17 +1,26 @@
+// import { useAppSelector } from '../../hooks/store';
+// import { userSelectors } from '../../store/slice/user';
 import { Review } from '../../types/review';
-import { formatDate, formatRating } from '../../utils';
+import { formatDate, formatRating, sortReviewsDate } from '../../utils';
 import ReviewsForm from '../reviews-form/reviews-form';
 
 type ReviewListProps = {
   reviews: Review[];
 }
 
+const MAX_COUNT_REVIEWS = 3;
+
 function ReviewsList({ reviews }: ReviewListProps): JSX.Element {
+
+  // const sortedReviews = [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const sortedReviews = sortReviewsDate(reviews).slice(0, MAX_COUNT_REVIEWS);
+
+
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
-        {reviews.map(({rating, id, user, comment, date}) => (
+        {sortedReviews.map(({rating, id, user, comment, date}) => (
           <li className="reviews__item" key={id}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -38,7 +47,7 @@ function ReviewsList({ reviews }: ReviewListProps): JSX.Element {
               <time className="reviews__time" dateTime={date}>{formatDate(date)}</time>
             </div>
           </li>
-        ))}
+        )).slice(0, 3)}
       </ul>
       <ReviewsForm />
     </section>

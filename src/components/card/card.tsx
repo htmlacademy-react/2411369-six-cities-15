@@ -5,9 +5,10 @@ import Bookmark from '../bookmark/bookmark';
 import { formatRating } from '../../utils';
 import { ComponentProps } from 'react';
 
-type CardProps = ServerOffer & Pick<ComponentProps<'article'>, 'onMouseEnter' | 'onMouseLeave'> & {
-  environment: 'cities' | 'favorites' | 'near-places';
-};
+type CardProps = ServerOffer &
+  Pick<ComponentProps<'article'>, 'onMouseEnter' | 'onMouseLeave'> & {
+    environment: 'cities' | 'favorites' | 'near-places';
+  };
 
 function Card({
   id,
@@ -20,25 +21,50 @@ function Card({
   previewImage,
   environment,
   onMouseEnter,
-  onMouseLeave
+  onMouseLeave,
 }: CardProps): JSX.Element {
   const imgWidth = environment === 'favorites' ? '150' : '260';
   const imgHeight = environment === 'favorites' ? '110' : '200';
 
+  // const handleCardClick = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: 'smooth',
+  //   });
+  // };
+
   return (
-    <article className={`${environment}__card place-card`} data-id={id} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >
+    <article
+      className={`${environment}__card place-card`}
+      data-id={id}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      // onClick={handleCardClick}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
 
-      <div className={`${environment}__image-wrapper place-card__image-wrapper`}>
+      <div
+        className={`${environment}__image-wrapper place-card__image-wrapper`}
+      >
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={previewImage} width={imgWidth} height={imgHeight} alt="Place image" />
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={imgWidth}
+            height={imgHeight}
+            alt="Place image"
+          />
         </Link>
       </div>
-      <div className={classNames('place-card__info', {'favorites__card-info': isFavorite})}>
+      <div
+        className={classNames('place-card__info', {
+          'favorites__card-info': isFavorite,
+        })}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -48,9 +74,10 @@ function Card({
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{
-              width: formatRating(rating),
-            }}
+            <span
+              style={{
+                width: formatRating(rating),
+              }}
             />
             <span className="visually-hidden">Rating</span>
           </div>

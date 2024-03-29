@@ -50,4 +50,4 @@ const offerSlice = createSlice({
 const offerActions = {...offerSlice.actions, fetchNearBy, fetchOffer};
 const offerSelector = offerSlice.selectors;
 
-export { offerActions, offerSelector };
+export { offerActions, offerSelector, offerSlice };

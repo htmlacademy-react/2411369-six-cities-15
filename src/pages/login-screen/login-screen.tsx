@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '../../hooks/document-title';
-import { FormEvent, ReactEventHandler, useRef, useState } from 'react';
+import { FormEvent, ReactEventHandler, useState } from 'react';
 import { userActions } from '../../store/slice/user';
 import { useActionCreators } from '../../hooks/store';
 
@@ -32,21 +32,6 @@ function LoginScreen(): JSX.Element {
     evt.preventDefault();
     login(formData);
   };
-
-  // const loginRef = useRef<HTMLInputElement | null>(null);
-  // const passwordRef = useRef<HTMLInputElement | null>(null);
-  // const { login } = useActionCreators(userActions);
-
-  // const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-  //   evt.preventDefault();
-
-  //   if (loginRef.current !== null && passwordRef.current !== null) {
-  //     login({
-  //       email: loginRef.current.value,
-  //       password: passwordRef.current.value
-  //     });
-  //   }
-  // };
 
   return (
     <main className="page__main page__main--login" >
