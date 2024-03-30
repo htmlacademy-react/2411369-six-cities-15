@@ -24,17 +24,21 @@ const ratings = [
   {value: 1, label: 'terribly'},
 ];
 
-function ReviewsForm({ offerId }: ReviewsFormProps): JSX.Element {
-  const { postReview } = useActionCreators(reviewsActions);
-  const [ isSubmitDisabled, setSubmitDisabled ] = useState(true);
+const shouldDisableForm = (form: Form): boolean => {
+  const rating = form.rating.value;
+  const review = form.review.value;
+  return review.length <= MIN_COMMENT_LENGTH || review.length > MAX_COMMENT_LENGTH || !rating
+};
+
+function ReviewsForm({offerId}: ReviewsFormProps): JSX.Element {
+  const {postReview} = useActionCreators(reviewsActions);
+  const [isSubmitDisabled, setSubmitDisabled] = useState(true);
   const formRef = useRef(null);
-  const [ isDisabled, setDisabled ] = useState(false);
+  const [isDisabled, setDisabled] = useState(false);
 
   const handleFormChange = (evt: React.FormEvent<HTMLFormElement>) => {
     const form = evt.currentTarget as Form;
-    const rating = form.rating.value;
-    const review = form.review.value;
-    setSubmitDisabled(review.length <= MIN_COMMENT_LENGTH || review.length > MAX_COMMENT_LENGTH || !rating);
+    setSubmitDisabled(shouldDisableForm(form));
   };
 
   const handleFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {

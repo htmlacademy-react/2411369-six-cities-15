@@ -26,20 +26,12 @@ function Card({
   const imgWidth = environment === 'favorites' ? '150' : '260';
   const imgHeight = environment === 'favorites' ? '110' : '200';
 
-  // const handleCardClick = () => {
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: 'smooth',
-  //   });
-  // };
-
   return (
     <article
       className={`${environment}__card place-card`}
       data-id={id}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      // onClick={handleCardClick}
     >
       {isPremium && (
         <div className="place-card__mark">

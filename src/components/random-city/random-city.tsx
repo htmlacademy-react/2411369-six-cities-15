@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { CITIES } from '../../const';
 import { Link } from 'react-router-dom';
 
-export function RandomCity() {
+export function RandomCity(): JSX.Element {
   const {id, name} = faker.helpers.arrayElement(CITIES);
   return (
     <section className="locations locations--login locations--current">

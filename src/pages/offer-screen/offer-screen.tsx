@@ -14,6 +14,13 @@ import { useEffect } from 'react';
 import { RequestStatus } from '../../const';
 import Loading from '../../components/loading/loading';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
+import { offersActions } from '../../store/slice/offers';
+
+const allActions = {
+  ...offerActions,
+  ...reviewsActions,
+  ...offersActions
+};
 
 function OfferScreen(): JSX.Element {
   useDocumentTitle('Offer');
@@ -24,14 +31,25 @@ function OfferScreen(): JSX.Element {
   const nearByOffers = useAppSelector(offerSelector.nearByOffers);
   const reviews = useAppSelector(reviewsSelector.lastReviews);
 
-  const { fetchNearBy, fetchOffer } = useActionCreators(offerActions);
-  const { fetchReviews } = useActionCreators(reviewsActions);
+  const { fetchNearBy, fetchOffer, setActiveId, fetchReviews } = useActionCreators(allActions);
 
   const { id } = useParams();
 
   useEffect(() => {
+    setActiveId(id);
     Promise.all([fetchOffer(id as string), fetchNearBy(id as string), fetchReviews(id as string)]);
-  }, [fetchOffer, fetchNearBy, fetchReviews, id]);
+  }, [fetchOffer, fetchNearBy, fetchReviews, setActiveId, id]);
+
+  // useEffect(() => {
+  //   const isIdle = status === RequestStatus.Idle;
+  //   const isChangedId = lastId.current === id;
+
+  //   if (id && (isIdle || isChangedId)) {
+  //     setActiveId(id);
+  //     Promise.all([fetchOffer(id), fetchNearBy(id), fetchReviews(id)]);
+  //     lastId.current = id;
+  //   }
+  // }, [fetchOffer, fetchNearBy, fetchReviews, setActiveId ,id, status]);
 
   if (status === RequestStatus.Loading) {
     return <Loading />;
@@ -135,7 +153,6 @@ function OfferScreen(): JSX.Element {
         <Map
           city={offerPage.city.name}
           offers={nearOffersPlusCurrent}
-          offerById={id}
           place='offer'
         />
       </section>
