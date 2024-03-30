@@ -1,8 +1,9 @@
 import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux';
 import { AppDispatch, RootState } from '../types/store';
 import { store } from '../store';
-import { ActionCreatorsMapObject, AsyncThunk, bindActionCreators } from '@reduxjs/toolkit';
+import { ActionCreatorsMapObject, AsyncThunk, bindActionCreators, createAsyncThunk } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
+import { AxiosInstance } from 'axios';
 
 export const useAppDispatch = useDispatch<AppDispatch>;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -21,3 +22,9 @@ type BoundActions<Actions extends ActionCreatorsMapObject> = {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type BoundAsyncThunk<Thunk extends AsyncThunk<any, any, any>> = (...args: Parameters<Thunk>) => ReturnType<ReturnType<Thunk>>
+
+export const createAppAsyncThunk = createAsyncThunk.withTypes<{
+  dispatch: AppDispatch;
+  state: RootState;
+  extra: AxiosInstance;
+}>();

@@ -2,33 +2,70 @@ import { useDocumentTitle } from '../../hooks/document-title';
 import Card from '../../components/card/card';
 import { useParams } from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
-import { reviews } from '../../mocks/reviews';
 import Bookmark from '../../components/bookmark/bookmark';
-import { formatRating, getNearOffers } from '../../utils';
+import { formatRating, getNearOffers, ucFirst } from '../../utils';
 import classNames from 'classnames';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { useAppSelector } from '../../hooks/store';
-import { offersSelectors } from '../../store/slice/offers';
+import { useActionCreators, useAppSelector } from '../../hooks/store';
+import { offerActions, offerSelector } from '../../store/slice/offer';
+import { reviewsActions, reviewsSelector } from '../../store/slice/review';
+import { useEffect, useRef } from 'react';
+import { RequestStatus } from '../../const';
+import Loading from '../../components/loading/loading';
+import useScrollToTop from '../../hooks/use-scroll-to-top';
+import { offersActions } from '../../store/slice/offers';
+
+const allActions = {
+  ...offerActions,
+  ...reviewsActions,
+  ...offersActions
+};
 
 function OfferScreen(): JSX.Element {
   useDocumentTitle('Offer');
+  useScrollToTop();
+
+  const offerPage = useAppSelector(offerSelector.offer);
+  const status = useAppSelector(offerSelector.offerStatus);
+  const nearByOffers = useAppSelector(offerSelector.nearByOffers);
+  const reviews = useAppSelector(reviewsSelector.lastReviews);
+
+  const { fetchNearBy, fetchOffer, setActiveId, fetchReviews } = useActionCreators(allActions);
 
   const { id } = useParams();
+  const lastId = useRef(id);
 
-  const offers = useAppSelector(offersSelectors.offers);
-  const foundOffer = offers.find((item): boolean => item.id.toString() === id);
+  // useEffect(() => {
+  //   setActiveId(id);
+  //   Promise.all([fetchOffer(id as string), fetchNearBy(id as string), fetchReviews(id as string)]);
+  // }, [fetchOffer, fetchNearBy, fetchReviews, setActiveId, id]);
 
-  if (!foundOffer) {
+  useEffect(() => {
+    const isIdle = status === RequestStatus.Idle;
+    const isChangedId = lastId.current !== id;
+
+    if (id && (isIdle || isChangedId)) {
+      setActiveId(id);
+      Promise.all([fetchOffer(id), fetchNearBy(id), fetchReviews(id)]);
+      lastId.current = id;
+    }
+  }, [fetchOffer, fetchNearBy, fetchReviews, setActiveId, id, status]);
+
+  if (status === RequestStatus.Loading) {
+    return <Loading />;
+  }
+
+  if (status === RequestStatus.Failed || !offerPage) {
     return <NotFoundScreen />;
   }
 
-  const offerPage = {offers, ...foundOffer};
-  const { isFavorite, isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms } = offerPage;
+  const { bedrooms, description, goods, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offerPage;
   const { name, avatarUrl, isPro } = host;
 
-  const nearOffers = getNearOffers(offerPage);
-  const nearOffersPlusCurrent = [offerPage, ...nearOffers];
+  const nearbyOffers = getNearOffers(nearByOffers, id, offerPage.city.name);
+
+  const nearOffersPlusCurrent = [offerPage, ...nearbyOffers];
 
   return (
     <main className="page__main page__main--offer">
@@ -69,7 +106,7 @@ function OfferScreen(): JSX.Element {
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                {type}
+                {ucFirst(type)}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
                 {bedrooms > 1 ? `${bedrooms} Bedrooms` : `${bedrooms} Bedroom`}
@@ -109,12 +146,9 @@ function OfferScreen(): JSX.Element {
                 <p className="offer__text">
                   {description}
                 </p>
-                <p className="offer__text">
-                  {description}
-                </p>
               </div>
             </div>
-            <ReviewsList reviews={ reviews } />
+            <ReviewsList reviews={ reviews } offerId={ id } />
           </div>
         </div>
         <Map
@@ -127,7 +161,7 @@ function OfferScreen(): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            {nearOffers.map((offer) =>
+            {nearbyOffers.map((offer) =>
               <Card key={offer.id} environment='near-places' {...offer} />
             )}
           </div>

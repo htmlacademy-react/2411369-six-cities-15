@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import { Offer } from '../../types/offer';
+import { ServerOffer } from '../../types/offer';
 import Card from '../card/card';
 import Sort from '../sort/sort';
 import CardListEmpty from '../card-list-empty/card-list-empty';
 import Map from '../map/map';
-import { CityName, RequstStatus } from '../../const';
+import { CityName, RequestStatus } from '../../const';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { offersActions, offersSelectors } from '../../store/slice/offers';
 import { MouseEvent, useState } from 'react';
@@ -14,13 +14,13 @@ import Loading from '../loading/loading';
 
 type CardListProps = {
   currentCity: CityName;
-  currentOffers: Offer[];
+  currentOffers: ServerOffer[];
   hasOffers: boolean;
 }
 
-function CardList({currentCity, currentOffers, hasOffers}: CardListProps) {
+function CardList({ currentCity, currentOffers, hasOffers }: CardListProps) {
   const status = useAppSelector(offersSelectors.status);
-  const isLoading = status === RequstStatus.Loading;
+  const isLoading = status === RequestStatus.Loading;
 
   const { setActiveId } = useActionCreators(offersActions);
   const [ activeSort, setActiveSort ] = useState(SortOption.Popular);
@@ -49,7 +49,7 @@ function CardList({currentCity, currentOffers, hasOffers}: CardListProps) {
             <Sort current={activeSort} setter={setActiveSort} />
             <div className="cities__places-list places__list tabs__content">
               {sortedOffers.map((offer) => (
-                <Card key={offer.id} environment="cities" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...offer} />
+                <Card key={offer.id} {...offer} environment="cities" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
               ))}
             </div>
           </section>

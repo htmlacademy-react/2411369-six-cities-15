@@ -1,6 +1,7 @@
 import { SortOption } from './components/sort';
-import { offers } from './mocks/offers';
-import { Offer } from './types/offer';
+import { CityName } from './const';
+import { ServerOffer } from './types/offer';
+import { Review } from './types/review';
 
 const enum Default {
   ScalingFactor = 100 / 5
@@ -12,15 +13,19 @@ export function formatRating(rating: number) {
 
 const MAX_NEAR_OFFERS = 3;
 
-export const getNearOffers = (offer: Offer): Offer[] => {
-  const nearOffers: Offer[] = [];
+export const getNearOffers = (
+  offers: ServerOffer[],
+  id: string | undefined,
+  city: CityName
+) => {
+  const nearOffers: ServerOffer[] = [];
 
-  for (let i = 0; i < offers.length; i++) {
-    if (offers[i].id !== offer.id && offers[i].city.name === offer.city.name) {
-      nearOffers.push(offers[i]);
+  for (const offer of offers) {
+    if (id !== offer.id && city === offer.city.name) {
+      nearOffers.push(offer);
     }
 
-    if (nearOffers.length >= MAX_NEAR_OFFERS) {
+    if (nearOffers.length === MAX_NEAR_OFFERS) {
       break;
     }
   }
@@ -32,7 +37,11 @@ export function formatDate(date: string) {
   return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date(date));
 }
 
-export function sortOffers(allOffers: Offer[], sortOption: SortOption) {
+export function sortReviewsDate(a: Review, b: Review) {
+  return new Date(a.date).getTime() - new Date(b.date).getTime();
+}
+
+export function sortOffers(allOffers: ServerOffer[], sortOption: SortOption) {
   switch (sortOption) {
     case SortOption.PriceLowToHigh:
       return allOffers.toSorted((a, b) => a.price - b.price);
@@ -44,3 +53,21 @@ export function sortOffers(allOffers: Offer[], sortOption: SortOption) {
       return allOffers;
   }
 }
+
+export const ucFirst = (string: string) => {
+  if (!string) {
+    return string;
+  }
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+const getRandomInteger = (min: number, max: number) => {
+  const lower = Math.ceil(Math.min(min, max));
+  const upper = Math.floor(Math.max(min, max));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
+
+export const getRandomArrayElement = <Element>(array: Element[] | readonly Element[]) =>
+  array[getRandomInteger(0, array.length - 1)];

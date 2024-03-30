@@ -1,6 +1,20 @@
-import { Fragment, ReactEventHandler, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
+import { useActionCreators } from '../../hooks/store';
+import { reviewsActions } from '../../store/slice/review';
+import { FullOffer } from '../../types/offer';
+import { toast } from 'react-toastify';
 
-type ChangeHadler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+type ReviewsFormProps = {
+  offerId: FullOffer['id'] | undefined;
+}
+
+type Form = HTMLFormElement & {
+  rating: RadioNodeList;
+  review: HTMLTextAreaElement;
+}
+
+const MAX_COMMENT_LENGTH = 300;
+const MIN_COMMENT_LENGTH = 50;
 
 const ratings = [
   {value: 5, label: 'perfect'},
@@ -10,22 +24,56 @@ const ratings = [
   {value: 1, label: 'terribly'},
 ];
 
-function ReviewsForm(): JSX.Element {
-  const [formData, setFormData] = useState({
-    rating: 0,
-    review: ''
-  });
+const shouldDisableForm = (form: Form): boolean => {
+  const rating = form.rating.value;
+  const review = form.review.value;
+  return review.length <= MIN_COMMENT_LENGTH || review.length > MAX_COMMENT_LENGTH || !rating;
+};
 
-  const handleChange: ChangeHadler = (evt) => {
-    const {name, value} = evt.currentTarget;
-    setFormData({
-      ...formData,
-      [name]: value
+function ReviewsForm({offerId}: ReviewsFormProps): JSX.Element {
+  const {postReview} = useActionCreators(reviewsActions);
+  const [isSubmitDisabled, setSubmitDisabled] = useState(true);
+  const formRef = useRef(null);
+  const [isDisabled, setDisabled] = useState(false);
+
+  const handleFormChange = (evt: React.FormEvent<HTMLFormElement>) => {
+    const form = evt.currentTarget as Form;
+    setSubmitDisabled(shouldDisableForm(form));
+  };
+
+  const handleFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    const form = evt.currentTarget as Form;
+    const reviewToSend = {
+      body: {
+        comment: form.review.value,
+        rating: +form.rating.value
+      },
+      offerId
+    };
+    setDisabled(true);
+    toast.promise(postReview(reviewToSend).unwrap(), {
+      pending: 'Sending review...',
+      success: {
+        render: () => {
+          setDisabled(false);
+          setSubmitDisabled(true);
+          form.reset();
+          return 'Review sent!';
+        }
+      },
+      error: {
+        render() {
+          setDisabled(false);
+          return 'Failed to send review. Please try again';
+        }
+      }
     });
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onChange={handleFormChange} onSubmit={handleFormSubmit} ref={formRef} >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {ratings.map(({value, label}) => (
@@ -36,7 +84,6 @@ function ReviewsForm(): JSX.Element {
               value={value}
               id={`${value}-stars`}
               type="radio"
-              onChange={handleChange}
             />
             <label
               htmlFor={`${value}-stars`}
@@ -54,8 +101,7 @@ function ReviewsForm(): JSX.Element {
         className="reviews__textarea form__textarea"
         id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={formData.review}
-        onChange={handleChange}
+        disabled={isDisabled}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -63,7 +109,7 @@ function ReviewsForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={formData.review.length <= 50 || formData.review.length > 300 || formData.rating === 0}
+          disabled={isSubmitDisabled || isDisabled}
         >
           Submit
         </button>

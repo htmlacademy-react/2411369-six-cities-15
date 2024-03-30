@@ -1,30 +1,29 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ThunkApi } from '../../types/store';
 import { APIRoute } from '../../const';
 import { AuthData, UserData } from '../../types/user';
-// import { dropToken, saveToken } from '../../services/token';
+import { createAppAsyncThunk } from '../../hooks/store';
+import { dropToken, saveToken } from '../../services/token';
 
-export const checkAuthorization = createAsyncThunk<UserData, undefined, ThunkApi>(
-  'user/ckeckAuthorization',
+export const checkAuthorization = createAppAsyncThunk<UserData, undefined>(
+  'user/ckeckAuth',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<UserData>(APIRoute.Login);
     return data;
   }
 );
 
-export const login = createAsyncThunk<UserData, AuthData, ThunkApi>(
+export const login = createAppAsyncThunk<UserData, AuthData>(
   'user/login',
   async ({ email, password }, { extra: api }) => {
     const { data: loginData } = await api.post<UserData>(APIRoute.Login, { email, password });
-    // saveToken(loginData.token);
+    saveToken(loginData.token);
     return loginData;
   }
 );
 
-export const logout = createAsyncThunk<void, undefined, ThunkApi>(
+export const logout = createAppAsyncThunk<void, undefined>(
   'user/logout',
   async (_arg, { extra: api }) => {
-    // dropToken();
     await api.delete(APIRoute.Logout);
+    dropToken();
   }
 );

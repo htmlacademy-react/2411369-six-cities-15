@@ -1,5 +1,5 @@
 import CardList from '../../components/card-list/card-list';
-import { CITIES, CityName, RequstStatus } from '../../const';
+import { CITIES, CityName, RequestStatus } from '../../const';
 import { useDocumentTitle } from '../../hooks/document-title';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
@@ -19,13 +19,14 @@ function MainScreen({ city }: MainScreenProps): JSX.Element {
   const currentOffers = offersByCity[city] ?? [];
   const hasOffers = Boolean(currentOffers.length);
   const status = useAppSelector(offersSelectors.status);
-  const { fetchOffers } = useActionCreators(offersActions);
+
+  const { fetchAllOffers } = useActionCreators(offersActions);
 
   useEffect(() => {
-    if (status === RequstStatus.Idle) {
-      fetchOffers();
+    if (status === RequestStatus.Idle) {
+      fetchAllOffers();
     }
-  }, [status, fetchOffers]);
+  }, [status, fetchAllOffers]);
 
   return (
     <main
