@@ -27,7 +27,7 @@ const ratings = [
 const shouldDisableForm = (form: Form): boolean => {
   const rating = form.rating.value;
   const review = form.review.value;
-  return review.length <= MIN_COMMENT_LENGTH || review.length > MAX_COMMENT_LENGTH || !rating
+  return review.length <= MIN_COMMENT_LENGTH || review.length > MAX_COMMENT_LENGTH || !rating;
 };
 
 function ReviewsForm({offerId}: ReviewsFormProps): JSX.Element {
