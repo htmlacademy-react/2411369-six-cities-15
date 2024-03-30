@@ -10,7 +10,7 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { offerActions, offerSelector } from '../../store/slice/offer';
 import { reviewsActions, reviewsSelector } from '../../store/slice/review';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { RequestStatus } from '../../const';
 import Loading from '../../components/loading/loading';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
@@ -34,22 +34,23 @@ function OfferScreen(): JSX.Element {
   const { fetchNearBy, fetchOffer, setActiveId, fetchReviews } = useActionCreators(allActions);
 
   const { id } = useParams();
-
-  useEffect(() => {
-    setActiveId(id);
-    Promise.all([fetchOffer(id as string), fetchNearBy(id as string), fetchReviews(id as string)]);
-  }, [fetchOffer, fetchNearBy, fetchReviews, setActiveId, id]);
+  const lastId = useRef(id);
 
   // useEffect(() => {
-  //   const isIdle = status === RequestStatus.Idle;
-  //   const isChangedId = lastId.current === id;
+  //   setActiveId(id);
+  //   Promise.all([fetchOffer(id as string), fetchNearBy(id as string), fetchReviews(id as string)]);
+  // }, [fetchOffer, fetchNearBy, fetchReviews, setActiveId, id]);
 
-  //   if (id && (isIdle || isChangedId)) {
-  //     setActiveId(id);
-  //     Promise.all([fetchOffer(id), fetchNearBy(id), fetchReviews(id)]);
-  //     lastId.current = id;
-  //   }
-  // }, [fetchOffer, fetchNearBy, fetchReviews, setActiveId ,id, status]);
+  useEffect(() => {
+    const isIdle = status === RequestStatus.Idle;
+    const isChangedId = lastId.current !== id;
+
+    if (id && (isIdle || isChangedId)) {
+      setActiveId(id);
+      Promise.all([fetchOffer(id), fetchNearBy(id), fetchReviews(id)]);
+      lastId.current = id;
+    }
+  }, [fetchOffer, fetchNearBy, fetchReviews, setActiveId, id, status]);
 
   if (status === RequestStatus.Loading) {
     return <Loading />;
