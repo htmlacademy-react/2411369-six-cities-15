@@ -1,20 +1,23 @@
-// import { useAppSelector } from '../../hooks/store';
-// import { userSelectors } from '../../store/slice/user';
+import { AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks/store';
+import { userSelectors } from '../../store/slice/user';
+import { FullOffer } from '../../types/offer';
 import { Review } from '../../types/review';
 import { formatDate, formatRating, sortReviewsDate } from '../../utils';
 import ReviewsForm from '../reviews-form/reviews-form';
 
 type ReviewListProps = {
   reviews: Review[];
+  offerId: FullOffer['id'] | undefined;
 }
 
-const MAX_COUNT_REVIEWS = 3;
+const MAX_COUNT_REVIEWS = -3;
 
-function ReviewsList({ reviews }: ReviewListProps): JSX.Element {
+function ReviewsList({ reviews, offerId }: ReviewListProps): JSX.Element {
+  const authStatus = useAppSelector(userSelectors.authorizationStatus);
+  const isLogged = authStatus === AuthorizationStatus.Auth;
 
-  // const sortedReviews = [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  const sortedReviews = sortReviewsDate(reviews).slice(0, MAX_COUNT_REVIEWS);
-
+  const sortedReviews = sortReviewsDate(reviews).slice(MAX_COUNT_REVIEWS);
 
   return (
     <section className="offer__reviews reviews">
@@ -47,9 +50,9 @@ function ReviewsList({ reviews }: ReviewListProps): JSX.Element {
               <time className="reviews__time" dateTime={date}>{formatDate(date)}</time>
             </div>
           </li>
-        )).slice(0, 3)}
+        ))}
       </ul>
-      <ReviewsForm />
+      {isLogged && <ReviewsForm offerId={ offerId } />}
     </section>
   );
 }

@@ -4,7 +4,7 @@ import Card from '../card/card';
 import Sort from '../sort/sort';
 import CardListEmpty from '../card-list-empty/card-list-empty';
 import Map from '../map/map';
-import { CityName, RequstStatus } from '../../const';
+import { CityName, RequestStatus } from '../../const';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { offersActions, offersSelectors } from '../../store/slice/offers';
 import { MouseEvent, useState } from 'react';
@@ -20,7 +20,7 @@ type CardListProps = {
 
 function CardList({ currentCity, currentOffers, hasOffers }: CardListProps) {
   const status = useAppSelector(offersSelectors.status);
-  const isLoading = status === RequstStatus.Loading;
+  const isLoading = status === RequestStatus.Loading;
 
   const { setActiveId } = useActionCreators(offersActions);
   const [ activeSort, setActiveSort ] = useState(SortOption.Popular);

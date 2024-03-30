@@ -16,7 +16,7 @@ type PostCommentProps = {
     comment: string;
     rating: number;
   };
-  offerId: FullOffer['id'];
+  offerId: FullOffer['id'] | undefined;
 }
 
 export const postReview = createAppAsyncThunk<Review, PostCommentProps>(

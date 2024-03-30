@@ -38,7 +38,7 @@ export function formatDate(date: string) {
 }
 
 export function sortReviewsDate(reviews: Review[]) {
-  return reviews.toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return reviews.toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
 
 export function sortOffers(allOffers: ServerOffer[], sortOption: SortOption) {

@@ -99,7 +99,7 @@ export enum APIRoute {
   Logout = '/logout'
 }
 
-export const enum RequstStatus {
+export const enum RequestStatus {
   Idle,
   Loading,
   Success,

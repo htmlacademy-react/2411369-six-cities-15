@@ -1,18 +1,18 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { FullOffer, ServerOffer } from '../../types/offer';
 import { fetchAllOffers } from '../thunk/offers';
-import { RequstStatus } from '../../const';
+import { RequestStatus } from '../../const';
 
 type OffersState = {
   activeId?: FullOffer['id'] | null;
   offers: ServerOffer[];
-  status: RequstStatus;
+  status: RequestStatus;
 };
 
 const initialState: OffersState = {
   activeId: null,
   offers: [],
-  status: RequstStatus.Idle
+  status: RequestStatus.Idle
 };
 
 const offersSlice = createSlice({
@@ -26,14 +26,14 @@ const offersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllOffers.pending, (state) => {
-        state.status = RequstStatus.Loading;
+        state.status = RequestStatus.Loading;
       })
       .addCase(fetchAllOffers.fulfilled, (state, action) => {
-        state.status = RequstStatus.Success;
+        state.status = RequestStatus.Success;
         state.offers = action.payload;
       })
       .addCase(fetchAllOffers.rejected, (state) => {
-        state.status = RequstStatus.Failed;
+        state.status = RequestStatus.Failed;
       });
   },
   selectors: {

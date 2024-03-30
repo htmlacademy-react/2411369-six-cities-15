@@ -11,7 +11,7 @@ import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { offerActions, offerSelector } from '../../store/slice/offer';
 import { reviewsActions, reviewsSelector } from '../../store/slice/review';
 import { useEffect } from 'react';
-import { RequstStatus } from '../../const';
+import { RequestStatus } from '../../const';
 import Loading from '../../components/loading/loading';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 
@@ -25,19 +25,19 @@ function OfferScreen(): JSX.Element {
   const reviews = useAppSelector(reviewsSelector.reviews);
 
   const { fetchNearBy, fetchOffer } = useActionCreators(offerActions);
-  const { fetchComments } = useActionCreators(reviewsActions);
+  const { fetchReviews } = useActionCreators(reviewsActions);
 
   const { id } = useParams();
 
   useEffect(() => {
-    Promise.all([fetchOffer(id as string), fetchNearBy(id as string), fetchComments(id as string)]);
-  }, [fetchOffer, fetchNearBy, fetchComments, id]);
+    Promise.all([fetchOffer(id as string), fetchNearBy(id as string), fetchReviews(id as string)]);
+  }, [fetchOffer, fetchNearBy, fetchReviews, id]);
 
-  if (status === RequstStatus.Loading) {
+  if (status === RequestStatus.Loading) {
     return <Loading />;
   }
 
-  if (status === RequstStatus.Failed || !offerPage) {
+  if (status === RequestStatus.Failed || !offerPage) {
     return <NotFoundScreen />;
   }
 
@@ -127,12 +127,9 @@ function OfferScreen(): JSX.Element {
                 <p className="offer__text">
                   {description}
                 </p>
-                {/* <p className="offer__text">
-                  {description}
-                </p> */}
               </div>
             </div>
-            <ReviewsList reviews={ reviews } />
+            <ReviewsList reviews={ reviews } offerId={ id } />
           </div>
         </div>
         <Map

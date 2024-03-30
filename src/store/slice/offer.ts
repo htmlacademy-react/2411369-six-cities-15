@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FullOffer, ServerOffer } from '../../types/offer';
 import { fetchNearBy, fetchOffer } from '../thunk/offers';
-import { RequstStatus } from '../../const';
+import { RequestStatus } from '../../const';
 
 type OfferState = {
   info: FullOffer | null;
   nearby: ServerOffer[];
-  status: RequstStatus;
+  status: RequestStatus;
 };
 
 const initialState: OfferState = {
   info: null,
   nearby: [],
-  status: RequstStatus.Idle
+  status: RequestStatus.Idle
 };
 
 const offerSlice = createSlice({
@@ -28,13 +28,13 @@ const offerSlice = createSlice({
     builder
       .addCase(fetchOffer.fulfilled, (state, action) => {
         state.info = action.payload;
-        state.status = RequstStatus.Success;
+        state.status = RequestStatus.Success;
       })
       .addCase(fetchOffer.rejected, (state) => {
-        state.status = RequstStatus.Failed;
+        state.status = RequestStatus.Failed;
       })
       .addCase(fetchOffer.pending, (state) => {
-        state.status = RequstStatus.Loading;
+        state.status = RequestStatus.Loading;
       })
       .addCase(fetchNearBy.fulfilled, (state, action) => {
         state.nearby = action.payload;
