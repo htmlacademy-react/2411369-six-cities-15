@@ -37,8 +37,8 @@ export function formatDate(date: string) {
   return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date(date));
 }
 
-export function sortReviewsDate(reviews: Review[]) {
-  return reviews.toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+export function sortReviewsDate(a: Review, b: Review) {
+  return new Date(a.date).getTime() - new Date(b.date).getTime();
 }
 
 export function sortOffers(allOffers: ServerOffer[], sortOption: SortOption) {
@@ -53,3 +53,11 @@ export function sortOffers(allOffers: ServerOffer[], sortOption: SortOption) {
       return allOffers;
   }
 }
+
+export const ucFirst = (string: string) => {
+  if (!string) {
+    return string;
+  }
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};

@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks/store';
 import { userSelectors } from '../../store/slice/user';
 import { FullOffer } from '../../types/offer';
 import { Review } from '../../types/review';
-import { formatDate, formatRating, sortReviewsDate } from '../../utils';
+import { formatDate, formatRating } from '../../utils';
 import ReviewsForm from '../reviews-form/reviews-form';
 
 type ReviewListProps = {
@@ -17,13 +17,11 @@ function ReviewsList({ reviews, offerId }: ReviewListProps): JSX.Element {
   const authStatus = useAppSelector(userSelectors.authorizationStatus);
   const isLogged = authStatus === AuthorizationStatus.Auth;
 
-  const sortedReviews = sortReviewsDate(reviews).slice(MAX_COUNT_REVIEWS);
-
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
-        {sortedReviews.map(({rating, id, user, comment, date}) => (
+        {reviews.map(({rating, id, user, comment, date}) => (
           <li className="reviews__item" key={id}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -50,7 +48,7 @@ function ReviewsList({ reviews, offerId }: ReviewListProps): JSX.Element {
               <time className="reviews__time" dateTime={date}>{formatDate(date)}</time>
             </div>
           </li>
-        ))}
+        )).slice(MAX_COUNT_REVIEWS)}
       </ul>
       {isLogged && <ReviewsForm offerId={ offerId } />}
     </section>

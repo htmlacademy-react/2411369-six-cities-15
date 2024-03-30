@@ -3,7 +3,7 @@ import Card from '../../components/card/card';
 import { useParams } from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Bookmark from '../../components/bookmark/bookmark';
-import { formatRating, getNearOffers } from '../../utils';
+import { formatRating, getNearOffers, ucFirst } from '../../utils';
 import classNames from 'classnames';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
@@ -22,7 +22,7 @@ function OfferScreen(): JSX.Element {
   const offerPage = useAppSelector(offerSelector.offer);
   const status = useAppSelector(offerSelector.offerStatus);
   const nearByOffers = useAppSelector(offerSelector.nearByOffers);
-  const reviews = useAppSelector(reviewsSelector.reviews);
+  const reviews = useAppSelector(reviewsSelector.lastReviews);
 
   const { fetchNearBy, fetchOffer } = useActionCreators(offerActions);
   const { fetchReviews } = useActionCreators(reviewsActions);
@@ -87,7 +87,7 @@ function OfferScreen(): JSX.Element {
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                {type}
+                {ucFirst(type)}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
                 {bedrooms > 1 ? `${bedrooms} Bedrooms` : `${bedrooms} Bedroom`}

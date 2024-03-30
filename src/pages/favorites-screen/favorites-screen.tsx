@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
-import Card from '../../components/card/card';
+// import Card from '../../components/card/card';
 import { useDocumentTitle } from '../../hooks/document-title';
 import { Fragment } from 'react';
 

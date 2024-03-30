@@ -4,7 +4,6 @@ import { reviewsActions } from '../../store/slice/review';
 import { FullOffer } from '../../types/offer';
 import { toast } from 'react-toastify';
 
-// type ChangeHadler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 type ReviewsFormProps = {
   offerId: FullOffer['id'] | undefined;
 }
