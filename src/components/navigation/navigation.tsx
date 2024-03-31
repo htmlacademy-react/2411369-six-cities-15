@@ -4,14 +4,11 @@ import { AppRoute } from '../../const';
 import { useAuth } from '../../hooks/user-auth';
 
 type NavigationProps = {
-  pathname: string;
+  pathname: AppRoute;
 };
 
 function Navigation({ pathname }: NavigationProps): JSX.Element {
-  const location = pathname;
-  const loginLink: string = AppRoute.Login;
-  const isLoginPage = loginLink === location;
-
+  const isLoginPage = AppRoute.Login === pathname;
   const isAuthorized = useAuth();
 
   if (isLoginPage) {

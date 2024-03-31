@@ -19,9 +19,10 @@ const offerSlice = createSlice({
   name: 'offer',
   initialState,
   reducers: {
-    clear(state) {
+    clearOffer(state) {
       state.info = null;
       state.nearby = [];
+      state.status = RequestStatus.Idle;
     }
   },
   extraReducers: (builder) => {

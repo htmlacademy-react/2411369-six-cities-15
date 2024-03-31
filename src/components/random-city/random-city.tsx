@@ -4,6 +4,7 @@ import { getRandomArrayElement } from '../../utils';
 
 export function RandomCity(): JSX.Element {
   const {id, name} = getRandomArrayElement(CITIES);
+
   return (
     <section className="locations locations--login locations--current">
       <div className="locations__item">

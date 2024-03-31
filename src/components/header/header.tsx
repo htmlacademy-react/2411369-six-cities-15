@@ -14,7 +14,7 @@ const citiesRotes = new Set(CITIES.map((city) => `/${city.id}`));
 function Header(): JSX.Element {
   const { pathname } = useLocation();
   const pathName = pathname as AppRoute;
-  const isOnMain = pathName === AppRoute.Main || citiesRotes.has(pathname);
+  const isOnMain = AppRoute.Main === pathName || citiesRotes.has(pathname);
 
   return (
     <div className={classNames('page', classPage[pathname], {
@@ -27,7 +27,7 @@ function Header(): JSX.Element {
             <div className="header__left">
               <Logo isOnMain={isOnMain} />
             </div>
-            <Navigation pathname={pathname} />
+            <Navigation pathname={pathName} />
           </div>
         </div>
       </header>
