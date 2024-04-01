@@ -2,18 +2,19 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { userActions, userSelectors } from '../../store/slice/user';
+import { useCallback } from 'react';
 
 type LoggedNavigationProps = {
-  pathname: string;
+  pathname: AppRoute;
 };
 
 function LoggedNavigation({ pathname }: LoggedNavigationProps): JSX.Element {
   const userData = useAppSelector(userSelectors.userData);
   const { logout } = useActionCreators(userActions);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout();
-  };
+  }, []);
 
   return (
     <ul className="header__nav-list">

@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { CityName } from '../../const';
 
 type CardListEmptyProps = {
   city: CityName;
 }
 
-function CardListEmpty({city}: CardListEmptyProps): JSX.Element {
+function CardListEmpty_({city}: CardListEmptyProps): JSX.Element {
   return (
     <>
       <section className="cities__no-places">
@@ -17,5 +18,7 @@ function CardListEmpty({city}: CardListEmptyProps): JSX.Element {
     </>
   );
 }
+
+const CardListEmpty = memo(CardListEmpty_);
 
 export default CardListEmpty;

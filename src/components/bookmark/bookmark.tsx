@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import { useBoolean } from '../../hooks';
+import { memo } from 'react';
 
 type BookmarkProps = {
   isActive: boolean;
   place?: 'place-card' | 'offer';
 }
 
-function Bookmark({ isActive, place = 'place-card' }: BookmarkProps): JSX.Element {
+function Bookmark_({ isActive, place = 'place-card' }: BookmarkProps): JSX.Element {
   const {isOn: isBookmarked, toggle: toggleBookmark} = useBoolean(isActive);
   const classNameObject = {
     [`${place}__bookmark-button`]: true,
@@ -25,5 +26,7 @@ function Bookmark({ isActive, place = 'place-card' }: BookmarkProps): JSX.Elemen
     </button>
   );
 }
+
+const Bookmark = memo(Bookmark_);
 
 export default Bookmark;

@@ -18,7 +18,7 @@ const reviewsSlice = createSlice({
   name: 'reviews',
   initialState,
   reducers: {
-    clear: (state) => {
+    clearReviews: (state) => {
       state.items = [];
       state.status = RequestStatus.Idle;
     }
