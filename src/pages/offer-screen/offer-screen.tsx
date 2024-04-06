@@ -14,6 +14,7 @@ import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { offersActions } from '../../store/slice/offers';
 import OfferContainer from '../../components/offer-container/offer-container';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
+import Header from '../../components/header/header';
 
 const allActions = {
   ...offerActions,
@@ -57,29 +58,32 @@ function OfferScreen(): JSX.Element {
   const nearOffersPlusCurrent = [offerPage, ...nearbyOffers];
 
   return (
-    <main className="page__main page__main--offer">
-      <section className="offer">
-        <OfferGallery images={offerPage.images} />
-        <OfferContainer offer={offerPage} offerId={id} />
-        <Map
-          city={offerPage.city.name}
-          offers={nearOffersPlusCurrent}
-          place="offer"
-        />
-      </section>
-      <div className="container">
-        <section className="near-places places">
-          <h2 className="near-places__title">
-            Other places in the neighbourhood
-          </h2>
-          <div className="near-places__list places__list">
-            {nearbyOffers.map((offer) => (
-              <Card key={offer.id} environment="near-places" {...offer} />
-            ))}
-          </div>
+    <div className="page">
+      <Header />
+      <main className="page__main page__main--offer">
+        <section className="offer">
+          <OfferGallery images={offerPage.images} />
+          <OfferContainer offer={offerPage} offerId={id} />
+          <Map
+            city={offerPage.city.name}
+            offers={nearOffersPlusCurrent}
+            place="offer"
+          />
         </section>
-      </div>
-    </main>
+        <div className="container">
+          <section className="near-places places">
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
+            <div className="near-places__list places__list">
+              {nearbyOffers.map((offer) => (
+                <Card key={offer.id} environment="near-places" {...offer} />
+              ))}
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
   );
 }
 

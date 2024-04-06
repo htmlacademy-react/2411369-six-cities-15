@@ -1,6 +1,5 @@
 import Footer from '../../components/footer/footer';
 import { useDocumentTitle } from '../../hooks/document-title';
-import { Fragment } from 'react';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import { useAppSelector } from '../../hooks/store';
 import { favoritesSelector } from '../../store/slice/favorites';
@@ -13,7 +12,7 @@ function FavoritesScreen(): JSX.Element {
   const hasfavorites = Boolean(favorites.length);
 
   return (
-    <Fragment>
+    <div className="page">
       {!hasfavorites ? <FavoritesEmpty /> :
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
@@ -24,7 +23,7 @@ function FavoritesScreen(): JSX.Element {
           </div>
         </main>}
       <Footer />
-    </Fragment>
+    </div>
   );
 }
 
