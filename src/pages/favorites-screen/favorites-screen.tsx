@@ -4,6 +4,7 @@ import FavoritesList from '../../components/favorites-list/favorites-list';
 import { useAppSelector } from '../../hooks/store';
 import { favoritesSelector } from '../../store/slice/favorites';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import Header from '../../components/header/header';
 
 function FavoritesScreen(): JSX.Element {
   useDocumentTitle('Favorites');
@@ -13,6 +14,7 @@ function FavoritesScreen(): JSX.Element {
 
   return (
     <div className="page">
+      <Header />
       {!hasfavorites ? <FavoritesEmpty /> :
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">

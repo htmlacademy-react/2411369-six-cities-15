@@ -13,13 +13,15 @@ import { userActions } from '../../store/slice/user';
 
 function App(): JSX.Element {
   const token = getToken();
-  const { checkAuthorization } = useActionCreators(userActions);
+  const { checkAuthorization, setUnauthorized } = useActionCreators(userActions);
 
   useEffect(() => {
     if (token) {
       checkAuthorization();
+    } else {
+      setUnauthorized();
     }
-  }, [token, checkAuthorization]);
+  }, [token, checkAuthorization, setUnauthorized]);
 
   return (
     <BrowserRouter>

@@ -30,11 +30,18 @@ function processLoading(state: UserState) {
   state.requestStatus = RequestStatus.Loading;
 }
 
+function setUnauthorized(state: UserState) {
+  state.userData = null;
+  state.authorizationStatus = AuthorizationStatus.NoAuth;
+}
+
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUnauthorized
+  },
   extraReducers: (builder) => {
     builder
       .addCase(checkAuthorization.fulfilled, processSuccess)
@@ -43,10 +50,7 @@ const userSlice = createSlice({
       .addCase(login.fulfilled, processSuccess)
       .addCase(login.rejected, processFailed)
       .addCase(login.pending, processLoading)
-      .addCase(logout.fulfilled, (state) => {
-        state.userData = null;
-        state.authorizationStatus = AuthorizationStatus.NoAuth;
-      });
+      .addCase(logout.fulfilled, setUnauthorized);
   },
   selectors: {
     authorizationStatus: (state) => state.authorizationStatus,

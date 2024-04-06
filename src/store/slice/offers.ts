@@ -2,6 +2,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { FullOffer, ServerOffer } from '../../types/offer';
 import { fetchAllOffers } from '../thunk/offers';
 import { RequestStatus } from '../../const';
+import { postFavorite } from '../thunk/favorites';
+import { logout } from '../thunk/user';
 
 type OffersState = {
   activeId?: FullOffer['id'] | null;
@@ -34,7 +36,19 @@ const offersSlice = createSlice({
       })
       .addCase(fetchAllOffers.rejected, (state) => {
         state.status = RequestStatus.Failed;
-      });
+      })
+      .addCase(postFavorite.fulfilled, (state, action) => {
+        const changedOffer = action.payload;
+
+        for (const offer of state.offers) {
+          if (offer.id === changedOffer.id) {
+            offer.isFavorite = changedOffer.isFavorite;
+
+            return;
+          }
+        }
+      })
+      .addCase(logout.fulfilled, () => initialState);
   },
   selectors: {
     activeId: (state) => state.activeId,

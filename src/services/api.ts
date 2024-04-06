@@ -10,7 +10,6 @@ type DetailMessageType = {
 
 const STATUS_TO_SHOW_ERROR = new Set([
   StatusCodes.BAD_REQUEST,
-  StatusCodes.UNAUTHORIZED,
   StatusCodes.NOT_FOUND
 ]);
 

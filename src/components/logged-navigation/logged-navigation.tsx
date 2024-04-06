@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, RequestStatus } from '../../const';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { userActions, userSelectors } from '../../store/slice/user';
-import { useCallback } from 'react';
-import { favoritesSelector } from '../../store/slice/favorites';
+import { useCallback, useEffect } from 'react';
+import { favoritesActions, favoritesSelector } from '../../store/slice/favorites';
 
 type LoggedNavigationProps = {
   pathname: AppRoute;
@@ -12,8 +12,17 @@ type LoggedNavigationProps = {
 function LoggedNavigation({ pathname }: LoggedNavigationProps): JSX.Element {
   const userData = useAppSelector(userSelectors.userData);
   const { logout } = useActionCreators(userActions);
+  const { fetchFavorites } = useActionCreators(favoritesActions);
+  const status = useAppSelector(favoritesSelector.favoritesStatus);
   const favorites = useAppSelector(favoritesSelector.favorites);
   const countFavorites = favorites.length;
+
+  useEffect(() => {
+    if (status === RequestStatus.Idle) {
+      fetchFavorites();
+    }
+  }, [status, fetchFavorites]);
+
 
   const handleLogout = useCallback(() => {
     logout();

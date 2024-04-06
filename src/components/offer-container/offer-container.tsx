@@ -27,7 +27,7 @@ function OfferContainer_({offer, offerId}: OfferContainerProps): JSX.Element {
           <h1 className="offer__name">
             {title}
           </h1>
-          <Bookmark isActive={isFavorite} offerId={offerId} place='offer' />
+          <Bookmark isFavorite={isFavorite} offerId={offerId} place='offer' />
         </div>
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">

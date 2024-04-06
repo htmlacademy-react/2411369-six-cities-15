@@ -7,35 +7,42 @@ import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { userSelectors } from '../../store/slice/user';
 import { FullOffer } from '../../types/offer';
 import { favoritesActions } from '../../store/slice/favorites';
+import { toast } from 'react-toastify';
 
 type BookmarkProps = {
-  isActive: boolean;
+  isFavorite: boolean;
   offerId: FullOffer['id'];
   place?: 'place-card' | 'offer';
 }
 
-function Bookmark_({ isActive, offerId, place = 'place-card' }: BookmarkProps): JSX.Element {
-  const {isOn: isBookmarked, toggle: toggleBookmark} = useBoolean(isActive);
-  const classNameObject = {
-    [`${place}__bookmark-button`]: true,
-    [`${place}__bookmark-button--active`]: isBookmarked
-  };
-  const bookmarkClass = classNames('button', classNameObject);
-  const iconWidth = place === 'offer' ? '31' : '18';
-  const iconHeight = place === 'offer' ? '33' : '19';
+function Bookmark_({ isFavorite, offerId, place = 'place-card' }: BookmarkProps): JSX.Element {
+  const {isOn: isBookmarked, toggle: toggleBookmark} = useBoolean(isFavorite);
+  const iconWidth = place === 'offer' ? 31 : 18;
+  const iconHeight = place === 'offer' ? 33 : 19;
 
   const authorizationStatus = useAppSelector(userSelectors.authorizationStatus);
   const { postFavorite } = useActionCreators(favoritesActions);
   const navigate = useNavigate();
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
-  const handleClick = () => {
+  const classNameObject = {
+    [`${place}__bookmark-button`]: true,
+    [`${place}__bookmark-button--active`]: isBookmarked && isAuth
+  };
+  const bookmarkClass = classNames('button', classNameObject);
+
+  function handleClick() {
     if (!isAuth) {
       return navigate(AppRoute.Login);
     }
-    postFavorite({id: offerId, isFavorite: !isBookmarked});
+
+    postFavorite({ id: offerId, isFavorite: !isBookmarked })
+      .unwrap()
+      .catch(() => {
+        toast.error('Failed. Please try again');
+      });
     toggleBookmark();
-  };
+  }
 
   return (
     <button className={bookmarkClass} type="button" onClick={handleClick}>
