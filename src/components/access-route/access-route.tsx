@@ -2,7 +2,8 @@ import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/store';
 import { userSelectors } from '../../store/slice/user';
-import LoginScreen from '../../pages/login-screen/login-screen';
+// import LoginScreen from '../../pages/login-screen/login-screen';
+import Loading from '../loading/loading';
 
 type AccessRouteProps = {
   children: JSX.Element;
@@ -15,7 +16,7 @@ const createAccessRoute = (status: AuthorizationStatus, fallback: AppRoute) =>
     );
 
     if (authorizationStatus === AuthorizationStatus.Unknown) {
-      return <LoginScreen />;
+      return <Loading />;
     }
 
     return authorizationStatus === status ? (

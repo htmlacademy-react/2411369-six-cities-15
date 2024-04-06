@@ -93,7 +93,7 @@ export const URL_MARKER_CURRENT = '../img/pin-active.svg';
 
 export enum APIRoute {
   Comments = '/comments',
-  Favorites = '/favorites',
+  Favorites = '/favorite',
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout'
