@@ -3,6 +3,7 @@ import { AppRoute } from '../../const';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { userActions, userSelectors } from '../../store/slice/user';
 import { useCallback } from 'react';
+import { favoritesSelector } from '../../store/slice/favorites';
 
 type LoggedNavigationProps = {
   pathname: AppRoute;
@@ -11,6 +12,8 @@ type LoggedNavigationProps = {
 function LoggedNavigation({ pathname }: LoggedNavigationProps): JSX.Element {
   const userData = useAppSelector(userSelectors.userData);
   const { logout } = useActionCreators(userActions);
+  const favorites = useAppSelector(favoritesSelector.favorites);
+  const countFavorites = favorites.length;
 
   const handleLogout = useCallback(() => {
     logout();
@@ -35,7 +38,7 @@ function LoggedNavigation({ pathname }: LoggedNavigationProps): JSX.Element {
           <span className="header__user-name user__name">
             {userData?.email}
           </span>
-          <span className="header__favorite-count">3</span>
+          <span className="header__favorite-count">{countFavorites}</span>
         </Link>
       </li>
       <li className="header__nav-item">

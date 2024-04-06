@@ -2,7 +2,7 @@ import { useDocumentTitle } from '../../hooks/document-title';
 import { FormEvent, ReactEventHandler, useState } from 'react';
 import { userActions } from '../../store/slice/user';
 import { useActionCreators } from '../../hooks/store';
-import { RandomCity } from '../../components/random-city/random-city';
+import RandomCity from '../../components/random-city/random-city';
 
 type HTMLLoginForm = HTMLFormElement & {
   email: HTMLInputElement;

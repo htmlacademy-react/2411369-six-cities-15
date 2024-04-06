@@ -27,7 +27,7 @@ function Navigation({ pathname }: NavigationProps): JSX.Element {
               to={AppRoute.Login}
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-              <span className="header__signout">Sign in</span>
+              <span className="header__login">Sign in</span>
             </Link>
           </li>
         </ul>

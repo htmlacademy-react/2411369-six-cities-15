@@ -1,6 +1,6 @@
 import { FullOffer } from './offer';
 
 export type FavoriteData = {
-  offerId: FullOffer['id'];
+  id: FullOffer['id'];
   isFavorite: boolean;
 }

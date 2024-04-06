@@ -13,9 +13,9 @@ export const fetchFavorites = createAppAsyncThunk<ServerOffer[], undefined>(
 
 export const postFavorite = createAppAsyncThunk<ServerOffer, FavoriteData>(
   'favorite/post',
-  async ({ offerId, isFavorite }, {extra: api}) => {
+  async ({ id, isFavorite }, { extra: api }) => {
     const numberFavorite = Number(isFavorite);
-    const { data } = await api.post<FullOffer>(`${APIRoute.Favorites}/${offerId}/${numberFavorite}`, { numberFavorite });
+    const { data } = await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/${numberFavorite}`, { numberFavorite });
     return data;
   }
 );
