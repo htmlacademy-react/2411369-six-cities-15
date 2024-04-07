@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import style from './not-found-screen.module.css';
-import { useDocumentTitle } from '../../hooks/document-title';
+import { useDocumentTitle } from '../../hooks/use-document-title';
 import Header from '../../components/header/header';
 
 

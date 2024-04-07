@@ -1,5 +1,5 @@
 import Footer from '../../components/footer/footer';
-import { useDocumentTitle } from '../../hooks/document-title';
+import { useDocumentTitle } from '../../hooks/use-document-title';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import { useAppSelector } from '../../hooks/store';
 import { favoritesSelector } from '../../store/slice/favorites';

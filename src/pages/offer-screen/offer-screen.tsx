@@ -1,4 +1,4 @@
-import { useDocumentTitle } from '../../hooks/document-title';
+import { useDocumentTitle } from '../../hooks/use-document-title';
 import Card from '../../components/card/card';
 import { useParams } from 'react-router-dom';
 import Map from '../../components/map/map';

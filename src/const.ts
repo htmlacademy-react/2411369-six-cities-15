@@ -1,9 +1,4 @@
-export const Setting = {
-  offersCount: 300
-};
-
 export const APP_NAME = '6 cities';
-export const RATING_STARS_WIDTH_FACTOR = 20;
 
 export const CITIES = [
   {

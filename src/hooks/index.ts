@@ -1,2 +1,2 @@
-export { useBoolean } from './boolean';
-export { useDocumentTitle } from './document-title';
+export { useBoolean } from './use-boolean';
+export { useDocumentTitle } from './use-document-title';
