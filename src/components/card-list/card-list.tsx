@@ -7,7 +7,7 @@ import Map from '../map/map';
 import { CityName, RequestStatus } from '../../const';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { offersActions, offersSelectors } from '../../store/slice/offers';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useCallback, useMemo, useState } from 'react';
 import { SortOption } from '../sort';
 import { sortOffers } from '../../utils';
 import Loading from '../loading/loading';
@@ -24,16 +24,16 @@ function CardList({ currentCity, currentOffers, hasOffers }: CardListProps) {
 
   const { setActiveId } = useActionCreators(offersActions);
   const [ activeSort, setActiveSort ] = useState(SortOption.Popular);
-  const sortedOffers = sortOffers(currentOffers, activeSort);
+  const sortedOffers = useMemo(() => sortOffers(currentOffers, activeSort), [currentOffers, activeSort]);
 
-  const handleMouseEnter = (evt: MouseEvent<HTMLElement>) => {
+  const handleMouseEnter = useCallback((evt: MouseEvent<HTMLElement>) => {
     const target = evt.currentTarget as HTMLElement;
     const id = target.dataset.id;
     setActiveId(id);
-  };
-  const handleMouseLeave = () => {
+  }, [setActiveId]);
+  const handleMouseLeave = useCallback(() => {
     setActiveId(undefined);
-  };
+  }, [setActiveId]);
 
   if (isLoading) {
     return <Loading />;

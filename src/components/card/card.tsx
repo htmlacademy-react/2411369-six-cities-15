@@ -23,8 +23,8 @@ function Card({
   onMouseEnter,
   onMouseLeave,
 }: CardProps): JSX.Element {
-  const imgWidth = environment === 'favorites' ? '150' : '260';
-  const imgHeight = environment === 'favorites' ? '110' : '200';
+  const imgWidth = environment === 'favorites' ? 150 : 260;
+  const imgHeight = environment === 'favorites' ? 110 : 200;
 
   return (
     <article

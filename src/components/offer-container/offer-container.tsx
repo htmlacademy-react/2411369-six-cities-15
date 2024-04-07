@@ -74,9 +74,11 @@ function OfferContainer_({offer, offerId}: OfferContainerProps): JSX.Element {
             <span className="offer__user-name">
               {name}
             </span>
-            <span className="offer__user-status">
-              {isPro && 'Pro'}
-            </span>
+            {isPro && (
+              <span className="offer__user-status">
+                Pro
+              </span>
+            )}
           </div>
           <div className="offer__description">
             <p className="offer__text">

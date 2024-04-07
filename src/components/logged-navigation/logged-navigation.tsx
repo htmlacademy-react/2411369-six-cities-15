@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, RequestStatus } from '../../const';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
 import { userActions, userSelectors } from '../../store/slice/user';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { favoritesActions, favoritesSelector } from '../../store/slice/favorites';
 
 type LoggedNavigationProps = {
@@ -24,9 +24,9 @@ function LoggedNavigation({ pathname }: LoggedNavigationProps): JSX.Element {
   }, [status, fetchFavorites]);
 
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = () => {
     logout();
-  }, []);
+  };
 
   return (
     <ul className="header__nav-list">

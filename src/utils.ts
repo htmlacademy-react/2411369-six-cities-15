@@ -8,7 +8,7 @@ const enum Default {
 }
 
 export function formatRating(rating: number) {
-  return `${Math.round(Default.ScalingFactor * rating)}%`;
+  return `${Math.round(rating) * Default.ScalingFactor}%`;
 }
 
 const MAX_NEAR_OFFERS = 3;
@@ -38,7 +38,7 @@ export function formatDate(date: string) {
 }
 
 export function sortReviewsDate(a: Review, b: Review) {
-  return new Date(a.date).getTime() - new Date(b.date).getTime();
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
 }
 
 export function sortOffers(allOffers: ServerOffer[], sortOption: SortOption) {

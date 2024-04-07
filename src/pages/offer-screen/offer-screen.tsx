@@ -46,15 +46,15 @@ function OfferScreen(): JSX.Element {
     clearOffer();
   }, [id, clearOffer]);
 
-  if (status === RequestStatus.Loading) {
-    return <Loading />;
-  }
-
-  if (status === RequestStatus.Failed || !offerPage) {
+  if (status === RequestStatus.Failed) {
     return <NotFoundScreen />;
   }
 
-  const nearbyOffers = getNearOffers(nearByOffers, id, offerPage.city.name);
+  if (status === RequestStatus.Loading || !offerPage) {
+    return <Loading />;
+  }
+
+  const nearbyOffers = getNearOffers(nearByOffers, id, offerPage.city.name) ;
   const nearOffersPlusCurrent = [offerPage, ...nearbyOffers];
 
   return (
@@ -76,9 +76,8 @@ function OfferScreen(): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              {nearbyOffers.map((offer) => (
-                <Card key={offer.id} environment="near-places" {...offer} />
-              ))}
+              {nearbyOffers.map((offer) =>
+                <Card key={offer.id} environment="near-places" {...offer} />)}
             </div>
           </section>
         </div>

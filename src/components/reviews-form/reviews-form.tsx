@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback, useRef, useState } from 'react';
+import { Fragment, memo, useState } from 'react';
 import { useActionCreators } from '../../hooks/store';
 import { reviewsActions } from '../../store/slice/review';
 import { FullOffer } from '../../types/offer';
@@ -33,15 +33,14 @@ const shouldDisableForm = (form: Form): boolean => {
 function ReviewsForm_({offerId}: ReviewsFormProps): JSX.Element {
   const {postReview} = useActionCreators(reviewsActions);
   const [isSubmitDisabled, setSubmitDisabled] = useState(true);
-  const formRef = useRef(null);
   const [isDisabled, setDisabled] = useState(false);
 
-  const handleFormChange = useCallback((evt: React.FormEvent<HTMLFormElement>) => {
+  const handleFormChange = (evt: React.FormEvent<HTMLFormElement>) => {
     const form = evt.currentTarget as Form;
     setSubmitDisabled(shouldDisableForm(form));
-  }, []);
+  };
 
-  const handleFormSubmit = useCallback((evt: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     const form = evt.currentTarget as Form;
@@ -70,10 +69,10 @@ function ReviewsForm_({offerId}: ReviewsFormProps): JSX.Element {
         }
       }
     });
-  }, []);
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onChange={handleFormChange} onSubmit={handleFormSubmit} ref={formRef} >
+    <form className="reviews__form form" action="#" method="post" onChange={handleFormChange} onSubmit={handleFormSubmit} >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {ratings.map(({value, label}) => (
@@ -84,6 +83,7 @@ function ReviewsForm_({offerId}: ReviewsFormProps): JSX.Element {
               value={value}
               id={`${value}-stars`}
               type="radio"
+              disabled={isDisabled}
             />
             <label
               htmlFor={`${value}-stars`}
