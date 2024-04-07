@@ -1,6 +1,6 @@
 import CardList from '../../components/card-list/card-list';
 import { CITIES, CityName, RequestStatus } from '../../const';
-import { useDocumentTitle } from '../../hooks/document-title';
+import { useDocumentTitle } from '../../hooks/use-document-title';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { useActionCreators, useAppSelector } from '../../hooks/store';

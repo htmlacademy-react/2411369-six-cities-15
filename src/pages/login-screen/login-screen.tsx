@@ -1,4 +1,4 @@
-import { useDocumentTitle } from '../../hooks/document-title';
+import { useDocumentTitle } from '../../hooks/use-document-title';
 import { FormEvent, ReactEventHandler, useState } from 'react';
 import { userActions } from '../../store/slice/user';
 import { useActionCreators } from '../../hooks/store';
