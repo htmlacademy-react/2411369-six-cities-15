@@ -1,7 +1,6 @@
 import { useDocumentTitle } from '../../hooks/document-title';
 import Card from '../../components/card/card';
 import { useParams } from 'react-router-dom';
-import { getNearOffers } from '../../utils';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
@@ -15,6 +14,8 @@ import { offersActions } from '../../store/slice/offers';
 import OfferContainer from '../../components/offer-container/offer-container';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import Header from '../../components/header/header';
+
+const MAX_COUNT_NEAR_OFFERS = 3;
 
 const allActions = {
   ...offerActions,
@@ -54,7 +55,7 @@ function OfferScreen(): JSX.Element {
     return <Loading />;
   }
 
-  const nearbyOffers = getNearOffers(nearByOffers, id, offerPage.city.name) ;
+  const nearbyOffers = nearByOffers.slice(0, MAX_COUNT_NEAR_OFFERS);
   const nearOffersPlusCurrent = [offerPage, ...nearbyOffers];
 
   return (

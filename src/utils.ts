@@ -1,5 +1,4 @@
 import { SortOption } from './components/sort';
-import { CityName } from './const';
 import { ServerOffer } from './types/offer';
 import { Review } from './types/review';
 
@@ -10,28 +9,6 @@ const enum Default {
 export function formatRating(rating: number) {
   return `${Math.round(rating) * Default.ScalingFactor}%`;
 }
-
-const MAX_NEAR_OFFERS = 3;
-
-export const getNearOffers = (
-  offers: ServerOffer[],
-  id: string | undefined,
-  city: CityName
-) => {
-  const nearOffers: ServerOffer[] = [];
-
-  for (const offer of offers) {
-    if (id !== offer.id && city === offer.city.name) {
-      nearOffers.push(offer);
-    }
-
-    if (nearOffers.length === MAX_NEAR_OFFERS) {
-      break;
-    }
-  }
-
-  return nearOffers;
-};
 
 export function formatDate(date: string) {
   return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date(date));
