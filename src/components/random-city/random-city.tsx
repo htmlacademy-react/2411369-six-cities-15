@@ -1,8 +1,9 @@
 import { CITIES } from '../../const';
 import { Link } from 'react-router-dom';
 import { getRandomArrayElement } from '../../utils';
+import { memo } from 'react';
 
-export function RandomCity(): JSX.Element {
+function RandomCity_(): JSX.Element {
   const {id, name} = getRandomArrayElement(CITIES);
 
   return (
@@ -15,3 +16,7 @@ export function RandomCity(): JSX.Element {
     </section>
   );
 }
+
+const RandomCity = memo(RandomCity_);
+
+export default RandomCity;

@@ -6,7 +6,7 @@ type ReviewListProps = {
   reviews: Review[];
 }
 
-const MAX_COUNT_REVIEWS = -3;
+const MAX_COUNT_REVIEWS = 10;
 
 function ReviewsList_({ reviews }: ReviewListProps): JSX.Element {
   return (
@@ -38,7 +38,7 @@ function ReviewsList_({ reviews }: ReviewListProps): JSX.Element {
             <time className="reviews__time" dateTime={date}>{formatDate(date)}</time>
           </div>
         </li>
-      )).slice(MAX_COUNT_REVIEWS)}
+      )).slice(0, MAX_COUNT_REVIEWS)}
     </ul>
   );
 }

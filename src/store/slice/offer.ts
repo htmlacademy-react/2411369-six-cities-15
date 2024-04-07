@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { FullOffer, ServerOffer } from '../../types/offer';
 import { fetchNearBy, fetchOffer } from '../thunk/offers';
 import { RequestStatus } from '../../const';
+import { postFavorite } from '../thunk/favorites';
 
 type OfferState = {
   info: FullOffer | null;
@@ -39,6 +40,14 @@ const offerSlice = createSlice({
       })
       .addCase(fetchNearBy.fulfilled, (state, action) => {
         state.nearby = action.payload;
+      })
+      // postFavorite fullfilled
+      .addCase(postFavorite.fulfilled, (state, action) => {
+        const changedOffer = action.payload;
+
+        if (state.info?.id === changedOffer.id) {
+          state.info.isFavorite = changedOffer.isFavorite;
+        }
       });
   },
   selectors: {

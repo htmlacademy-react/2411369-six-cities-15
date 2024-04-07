@@ -10,7 +10,6 @@ type MapProps = {
   city: CityName;
   offers: ServerOffer[];
   place?: 'cities' | 'offer';
-  // offerById?: string;
 };
 
 const defaultCustomIcon = new Icon({
@@ -28,7 +27,6 @@ const currentCustomIcon = new Icon({
 function Map({
   city,
   offers,
-  // offerById,
   place = 'cities',
 }: MapProps): JSX.Element {
 

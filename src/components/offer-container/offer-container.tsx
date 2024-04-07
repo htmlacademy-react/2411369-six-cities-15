@@ -7,7 +7,7 @@ import OfferReviews from '../offer-reviews/offer-reviews';
 
 type OfferContainerProps = {
   offer: FullOffer;
-  offerId?: FullOffer['id'];
+  offerId: FullOffer['id'];
 }
 
 function OfferContainer_({offer, offerId}: OfferContainerProps): JSX.Element {
@@ -27,7 +27,7 @@ function OfferContainer_({offer, offerId}: OfferContainerProps): JSX.Element {
           <h1 className="offer__name">
             {title}
           </h1>
-          <Bookmark isActive={isFavorite} place='offer' />
+          <Bookmark isFavorite={isFavorite} offerId={offerId} place='offer' />
         </div>
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">
@@ -74,9 +74,11 @@ function OfferContainer_({offer, offerId}: OfferContainerProps): JSX.Element {
             <span className="offer__user-name">
               {name}
             </span>
-            <span className="offer__user-status">
-              {isPro && 'Pro'}
-            </span>
+            {isPro && (
+              <span className="offer__user-status">
+                Pro
+              </span>
+            )}
           </div>
           <div className="offer__description">
             <p className="offer__text">

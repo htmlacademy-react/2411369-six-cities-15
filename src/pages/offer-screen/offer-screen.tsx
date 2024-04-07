@@ -1,7 +1,6 @@
 import { useDocumentTitle } from '../../hooks/document-title';
 import Card from '../../components/card/card';
 import { useParams } from 'react-router-dom';
-import { getNearOffers } from '../../utils';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useActionCreators, useAppSelector } from '../../hooks/store';
@@ -14,6 +13,9 @@ import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { offersActions } from '../../store/slice/offers';
 import OfferContainer from '../../components/offer-container/offer-container';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
+import Header from '../../components/header/header';
+
+const MAX_COUNT_NEAR_OFFERS = 3;
 
 const allActions = {
   ...offerActions,
@@ -45,41 +47,43 @@ function OfferScreen(): JSX.Element {
     clearOffer();
   }, [id, clearOffer]);
 
-  if (status === RequestStatus.Loading) {
-    return <Loading />;
-  }
-
-  if (status === RequestStatus.Failed || !offerPage) {
+  if (status === RequestStatus.Failed) {
     return <NotFoundScreen />;
   }
 
-  const nearbyOffers = getNearOffers(nearByOffers, id, offerPage.city.name);
+  if (status === RequestStatus.Loading || !offerPage) {
+    return <Loading />;
+  }
+
+  const nearbyOffers = nearByOffers.slice(0, MAX_COUNT_NEAR_OFFERS);
   const nearOffersPlusCurrent = [offerPage, ...nearbyOffers];
 
   return (
-    <main className="page__main page__main--offer">
-      <section className="offer">
-        <OfferGallery images={offerPage.images} />
-        <OfferContainer offer={offerPage} offerId={id} />
-        <Map
-          city={offerPage.city.name}
-          offers={nearOffersPlusCurrent}
-          place="offer"
-        />
-      </section>
-      <div className="container">
-        <section className="near-places places">
-          <h2 className="near-places__title">
-            Other places in the neighbourhood
-          </h2>
-          <div className="near-places__list places__list">
-            {nearbyOffers.map((offer) => (
-              <Card key={offer.id} environment="near-places" {...offer} />
-            ))}
-          </div>
+    <div className="page">
+      <Header />
+      <main className="page__main page__main--offer">
+        <section className="offer">
+          <OfferGallery images={offerPage.images} />
+          <OfferContainer offer={offerPage} offerId={id} />
+          <Map
+            city={offerPage.city.name}
+            offers={nearOffersPlusCurrent}
+            place="offer"
+          />
         </section>
-      </div>
-    </main>
+        <div className="container">
+          <section className="near-places places">
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
+            <div className="near-places__list places__list">
+              {nearbyOffers.map((offer) =>
+                <Card key={offer.id} environment="near-places" {...offer} />)}
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
   );
 }
 
